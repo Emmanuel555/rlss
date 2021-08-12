@@ -135,8 +135,8 @@ public:
                 segments_and_durations =
                 m_discrete_path_searcher->search(
                     current_robot_state[0],
-                    goal_and_duration->first,
-                    goal_and_duration->second,
+                    goal_and_duration->first, //goal position
+                    goal_and_duration->second, // time horizon
                     occupancy_grid
         );
         auto discrete_search_end_time = std::chrono::steady_clock::now();
@@ -166,7 +166,7 @@ public:
 
 
         const StdVectorVectorDIM& segments = segments_and_durations->first;
-        std::vector<T>& durations = segments_and_durations->second;
+        std::vector<T>& durations = segments_and_durations->second; // durations is vector type 
 
         debug_message(
                 "segments.size() = ",
@@ -189,7 +189,7 @@ public:
             );
         }
 
-        std::optional<PiecewiseCurve> resulting_curve = std::nullopt;
+        std::optional<PiecewiseCurve> resulting_curve = std::nullopt; // equates to final solution
 
         for(unsigned int c = 0; c < m_maximum_rescaling_count; c++) {
             debug_message("trajectoryOptimization...");
@@ -290,6 +290,8 @@ public:
             sf_statistics.setPlanningSuccessFail(true);
             statistics_storage.add(sf_statistics);
             statistics_storage.add(duration_statistics);
+                        
+
             return resulting_curve;
         }
     }

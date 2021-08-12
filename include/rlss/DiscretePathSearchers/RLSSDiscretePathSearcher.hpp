@@ -24,11 +24,11 @@ public:
         std::shared_ptr<CollisionShape> colsha,
         T maxvel,
         std::size_t num_pieces
-    ) : m_safe_upto(safe_upto),
+    ) : m_safe_upto(safe_upto), // replanning period 
         m_workspace(ws),
         m_collision_shape(colsha),
         m_maximum_velocity(maxvel),
-        m_num_pieces(num_pieces)
+        m_num_pieces(num_pieces) // 4
     {
 
     }
@@ -37,14 +37,14 @@ public:
     search(
             const VectorDIM& current_position,
             const VectorDIM& goal_position,
-            T time_horizon,
+            T time_horizon, // probably taken from desired time horizon in RLSS::planner
             const OccupancyGrid& occupancy_grid
     ) override {
         time_horizon = std::max(time_horizon, m_safe_upto);
 
         std::optional<StdVectorVectorDIM> discrete_path_opt =
                 rlss::internal::discreteSearch<T, DIM>(
-                        current_position,
+                        current_position, // if current pos is stuck, current time is just gonna drift further resulting in a further target pos which means the drone needs to fly there faster ( increased vel)
                         goal_position,
                         occupancy_grid,
                         m_workspace,
@@ -58,12 +58,12 @@ public:
 
         StdVectorVectorDIM discrete_path = std::move(*discrete_path_opt);
 
-        discrete_path = rlss::internal::firstSegmentFix<T, DIM>(discrete_path);
+        discrete_path = rlss::internal::firstSegmentFix<T, DIM>(discrete_path); // taken from discrete_path_opt
 
         T total_path_length = 0;
         for(std::size_t i = 0; i < discrete_path.size() - 1; i++) {
             total_path_length
-                    += (discrete_path[i+1] - discrete_path[i]).norm();
+                    += (discrete_path[i+1] - discrete_path[i]).norm(); // norm refers to magnitude
         }
         time_horizon = std::max(
                 time_horizon,
@@ -88,7 +88,7 @@ public:
                           discrete_path.size());
         }
 
-        std::vector<T> segment_lengths(m_num_pieces);
+        std::vector<T> segment_lengths(m_num_pieces); /// num_pieces = 4 for most of the time, need to test from here all the way to the bottom tmr
         total_path_length = 0;
         for(std::size_t i = 0; i + 1 < discrete_path.size(); i++) {
             segment_lengths[i]
@@ -101,7 +101,7 @@ public:
         std::vector<T> segment_durations(m_num_pieces, 0);
         for(std::size_t i = 0; i < segment_lengths.size(); i++) {
             segment_durations[i]
-                    = time_horizon * (segment_lengths[i] / total_path_length);
+                    = time_horizon * (segment_lengths[i] / total_path_length); // the fraction of the time horizon dedicated for each segment length
         }
 
         if(!segment_durations.empty() && segment_durations[0] < m_safe_upto) {
@@ -112,7 +112,7 @@ public:
             }
         }
 
-        return std::make_pair(discrete_path, segment_durations);
+        return std::make_pair(discrete_path, segment_durations); // figure a way to extract this 
     };
 private:
     T m_safe_upto;

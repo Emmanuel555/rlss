@@ -220,6 +220,7 @@ namespace rlss {
             nlohmann::json toJSON(const Bezier& bez) const {
                 nlohmann::json bez_json;
                 bez_json["max_parameter"] = bez.maxParameter();
+                //bez_json["psuedo_max_parameter"] = bez.maxParameter() + 1;
                 bez_json["type"] = "bezier";
 
                 for(std::size_t j = 0; j < bez.numControlPoints(); j++) {

@@ -17,7 +17,7 @@ public:
     // at given center of mass
     virtual StdVectorVectorDIM convexHullPoints(const VectorDIM& com) const = 0;
 
-    // get the boinding box of the collision shape at center of mass
+    // get the bounding box of the collision shape at center of mass
     virtual AlignedBox boundingBox(const VectorDIM& com) const = 0;
 };
 }

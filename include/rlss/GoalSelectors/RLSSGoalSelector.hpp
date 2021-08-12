@@ -35,7 +35,7 @@ public:
     (
             const VectorDIM& current_position,
             const OccupancyGrid& occupancy_grid,
-            T current_time
+            T current_time  // current time = 0.0, current time + replaning period(0.01) per cycle; 
     ) override {
 //        UnorderedIndexSet reachable_indices
 //                = rlss::internal::BFS<T, DIM>(
@@ -49,7 +49,7 @@ public:
                 current_time + m_desired_horizon,
                 m_original_trajectory.maxParameter()
         );
-        VectorDIM target_position = m_original_trajectory.eval(target_time, 0);
+        VectorDIM target_position = m_original_trajectory.eval(target_time, 0); // null derivative value at target time (current time + horizon), max time it will reach will be its duration
         bool target_time_valid = false;
         std::vector<Index> neighbors = occupancy_grid.getNeighbors(
                 target_position
@@ -132,7 +132,7 @@ public:
         }
 
         T actual_horizon = target_time - current_time;
-        return std::make_pair(target_position, actual_horizon);
+        return std::make_pair(target_position, actual_horizon); //horizon shud be 8s, and target position = m_original_trajectory.eval(current time + horizon, 0)
     }
 
     void setOriginalTrajectory(const PiecewiseCurve& origtraj) {
