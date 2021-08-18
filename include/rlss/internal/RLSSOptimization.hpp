@@ -35,7 +35,7 @@ std::vector<Hyperplane<T, DIM>> robot_safety_hyperplanes(
                 = rlss::internal::cornerPoints<T, DIM>(oth_collision_shape_bbox);
 
 
-        Hyperplane svm_hp = rlss::internal::svm<T, DIM>(robot_points, oth_points);
+        Hyperplane svm_hp = rlss::internal::svm<T, DIM>(robot_points, oth_points); // (current robot box and other robot's box)
 
 
         Hyperplane svm_shifted = rlss::internal::shiftHyperplane<T, DIM>(
@@ -170,16 +170,16 @@ void generate_optimization_problem(
 //    robot_to_robot_hps = internal::pruneHyperplanes<T, DIM>(
 //            robot_to_robot_hps, ws);
 
-    for(const auto& hp: robot_to_robot_hps) {
-        bool r2r_hyperplane_constraints_soft_enabled
+    for(const auto& hp: robot_to_robot_hps) { //vector containing hyperplanes
+        bool r2r_hyperplane_constraints_soft_enabled 
             = soft_parameters.find("robot_to_robot_hyperplane_constraints")
                     != soft_parameters.end()
-              && soft_parameters.at("robot_to_robot_hyperplane_constraints").first;
-        T r2r_hyperplane_constraints_soft_weight =
+              && soft_parameters.at("robot_to_robot_hyperplane_constraints").first; // enable : true
+        T r2r_hyperplane_constraints_soft_weight = 
                 r2r_hyperplane_constraints_soft_enabled
-                ? soft_parameters.at("robot_to_robot_hyperplane_constraints").second
+                ? soft_parameters.at("robot_to_robot_hyperplane_constraints").second // weight : 10000
                 : 0;
-        qpgen.addHyperplaneConstraintForPiece(
+        qpgen.addHyperplaneConstraintForPiece( // 1
                 0,
                 hp,
                 r2r_hyperplane_constraints_soft_enabled,
@@ -279,7 +279,7 @@ void generate_optimization_problem(
                 ? soft_parameters.at("robot_to_obstacle_hyperplane_constraints")
                             .second
                 : 0;
-            qpgen.addHyperplaneConstraintForPiece(
+            qpgen.addHyperplaneConstraintForPiece( // 2
                     p_idx,
                     shp,
                     r2o_hyperplane_constraints_soft_enabled,
@@ -317,7 +317,7 @@ void generate_optimization_problem(
                 ? soft_parameters.at("continuity_constraints")
                         .second
                 : 0;
-            qpgen.addContinuityConstraint(
+            qpgen.addContinuityConstraint( // 3
                 p_idx,
                 k,
                 continuity_constraints_soft_enabled,
@@ -347,7 +347,7 @@ void generate_optimization_problem(
                 ? soft_parameters.at("initial_point_constraints")
                         .second
                 : 0;
-        qpgen.addEvalConstraint(
+        qpgen.addEvalConstraint( // 4
                 0,
                 k,
                 current_robot_state[k],

@@ -133,6 +133,11 @@ int main(int argc, char* argv[]) {
     }
     OccupancyGrid occupancy_grid(step_size);
 
+
+
+
+
+    // occupany grid developed from obstacle directory 
     for(auto& p: fs::directory_iterator(base_path + obstacle_directory)) {
         std::fstream obstacle_file(p.path().string(), std::ios_base::in);
         std::string type;
@@ -166,9 +171,11 @@ int main(int argc, char* argv[]) {
     }
 
     std::cout << "num obstacles: " << occupancy_grid.size() << std::endl;
+    //std::cout << 
 
 
 
+    // initialises the relevant vectors for the planner
     std::vector<RLSS> planners;
     std::vector<std::shared_ptr<CollisionShape>> collision_shapes;
     std::vector<PiecewiseCurve> original_trajectories;
@@ -183,6 +190,11 @@ int main(int argc, char* argv[]) {
             >
     > noise;
 
+
+
+            
+
+    // robot params and path constraints begin here 
     for(auto& p:
             fs::directory_iterator(base_path + robot_parameters_directory)
             ) {
@@ -613,7 +625,8 @@ int main(int argc, char* argv[]) {
         current_time += replanning_period;  //current time at the end equivalent to the duration
         //std::cout << trajectories[0].maxParameter() << std::endl;
         max_parameter = trajectories[0].maxParameter();
-        //std::cout << "current_time: " << current_time << " traj_current_time: " << trajectory_current_times[0] << std::endl;
+        std::cout << "Current_time: " << current_time << " Drone 0 Final Position: " << states[0][0] << " Drone 1 Final Position: "<< states [1][0] << std::endl;
+        //<< " traj_current_time: " << trajectory_current_times[0] << std::endl;
         //std::cout << "max_param: " << max_parameter << " current_position: " << states[0][0] << std::endl;
         //std::cout << qp_generator.numPieces() << endl;
         //std::cout << "original_traj[0]: " << original_trajectories[0].maxParameter() << std::endl; // 15 aka the duration
@@ -626,6 +639,7 @@ int main(int argc, char* argv[]) {
         std::cout << "Actual Required Velocity of Drone 0: " << total_displacement_0/original_trajectories[0].maxParameter() << std::endl;
         std::cout << "Total displacement of Drone 1: " << total_displacement_1 << std::endl;
         std::cout << "Actual Required Velocity of Drone 1: " << total_displacement_1/original_trajectories[1].maxParameter() << std::endl;
+        std::cout << "num obstacles: " << occupancy_grid.size() << std::endl;
         std::cout << "\n";
     }
 

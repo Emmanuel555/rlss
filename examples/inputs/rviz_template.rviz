@@ -12,6 +12,7 @@ Panels:
         - /Odometry1/Shape1
         - /MarkerArray1
         - /MarkerArray1/Namespaces1
+        - /Axes1
       Splitter Ratio: 0.5
     Tree Height: 775
   - Class: rviz/Selection
@@ -39,7 +40,7 @@ Visualization Manager:
   Class: ""
   Displays:
     - Alpha: 0.5
-      Cell Size: 1
+      Cell Size: 0.5
       Class: rviz/Grid
       Color: 160; 160; 164
       Enabled: true
@@ -98,6 +99,13 @@ Visualization Manager:
         "": true
       Queue Size: 100
       Value: true
+    - Class: rviz/Axes
+      Enabled: true
+      Length: 1
+      Name: Axes
+      Radius: 0.100000001
+      Reference Frame: <Fixed Frame>
+      Value: true
   Enabled: true
   Global Options:
     Background Color: 255; 255; 255
@@ -123,25 +131,25 @@ Visualization Manager:
   Views:
     Current:
       Class: rviz/Orbit
-      Distance: 28.0801983
+      Distance: 17.4186974
       Enable Stereo Rendering:
         Stereo Eye Separation: 0.0599999987
         Stereo Focal Distance: 1
         Swap Stereo Eyes: false
         Value: false
       Focal Point:
-        X: 1.84195828
-        Y: -0.168710425
-        Z: 0.00134550175
+        X: 0.234431684
+        Y: -0.163711935
+        Z: 0.322265029
       Focal Shape Fixed Size: true
       Focal Shape Size: 0.0500000007
       Invert Z Axis: false
       Name: Current View
       Near Clip Distance: 0.00999999978
-      Pitch: 1.56979632
+      Pitch: 0.629796982
       Target Frame: <Fixed Frame>
       Value: Orbit (rviz)
-      Yaw: 4.71500015
+      Yaw: 3.62184739
     Saved: ~
 Window Geometry:
   Displays:

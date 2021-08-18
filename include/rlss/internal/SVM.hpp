@@ -22,7 +22,7 @@ Hyperplane<T, DIM> svm(
     const StdVectorVectorDIM<T,DIM>& f, 
     const StdVectorVectorDIM<T,DIM>& s) {
 
-    QPWrappers::Problem<T> svm_qp(DIM + 1);
+    QPWrappers::Problem<T> svm_qp(DIM + 1); // svm_qp identifies as the problem
     Matrix<T> Q(DIM+1, DIM+1);
     Q.setIdentity();
     Q *= 2;

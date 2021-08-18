@@ -6,7 +6,7 @@
         "duration": 15,
         "control_points": [
           [-6.0087, 3.11773, 1.0250584],
-          [3.53392, -2.56154, 1.0504614]
+          [3.53392, 3.1173, 1.0504614]
         ]
       }
     ]
@@ -37,8 +37,8 @@
   "desired_time_horizon": 8,
   "continuity_upto_degree": 2,
   "maximum_derivative_magnitudes": [
-    [1, 3],
-    [2, 4]
+    [1, 20],
+    [2, 20]
   ],
   "integrated_squared_derivative_weights": [
     [1, 1.0],

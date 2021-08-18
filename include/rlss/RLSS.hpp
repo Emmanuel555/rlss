@@ -196,7 +196,7 @@ public:
             auto trajectory_optimization_start_time
                 = std::chrono::steady_clock::now();
             resulting_curve =
-                    m_trajectory_optimizer->optimize(
+                    m_trajectory_optimizer->optimize( // returns a curve 
                             segments,
                             durations,
                             other_robot_collision_shape_bounding_boxes,

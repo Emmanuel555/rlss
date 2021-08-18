@@ -27,7 +27,7 @@ public:
                 param < curve.maxParameter();
                 param += m_search_step
             ) {
-                T norm = curve.eval(param, d).norm();
+                T norm = curve.eval(param, d).norm(); //curve.eval(time_param, derivative)
                 if(norm > l) {
                     debug_message(
                             internal::debug::colors::RED,

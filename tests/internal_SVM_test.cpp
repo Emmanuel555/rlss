@@ -38,10 +38,10 @@ TEST_CASE("SVM in 3D", "internal::svm") {
     Hyperplane3 svmhp = rlss::internal::svm<double, 3U>(f, s);
 
     for(const VectorDIM3& v: f) {
-        REQUIRE(svmhp.normal().dot(v) + svmhp.offset() <= -1+1e-9);
+        REQUIRE(svmhp.normal().dot(v) + svmhp.offset() <= -1+1e-9); // nv + b < 0
     }
     for(const VectorDIM3& v: s) {
-        REQUIRE(svmhp.normal().dot(v) + svmhp.offset() >= 1-1e-9);
+        REQUIRE(svmhp.normal().dot(v) + svmhp.offset() >= 1-1e-9); // nv + b > 0
     }
 
     Hyperplane3 shp {VectorDIM3 {2,0,0}, -3};

@@ -30,16 +30,16 @@
         [10, 10, 10]
     ],
     "maximum_derivative_magnitudes": [
-        [10, 20],
-        [10, 20]
+        [1, 20],
+        [2, 20]
     ],
-    "max_rescaling_count": 5,
+    "max_rescaling_count": 10,
     "continuity_upto_degree": 2,
     "collision_shape_at_zero": [  
         [-0.6, -0.6, -0.25], 
         [0.6, 0.6, 0.25]
     ],
-    "optimization_obstacle_check_distance": 3.0,
+    "optimization_obstacle_check_distance": 1.0,
     "optimizer": "rlss-soft",
     "soft_optimization_parameters": {
         "robot_to_robot_hyperplane_constraints": {
