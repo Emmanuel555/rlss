@@ -150,7 +150,7 @@ int main(int argc, char* argv[]) {
                     obstacle_file >> vec(d);
                 obstacle_pts.push_back(vec);
             }
-            occupancy_grid.addObstacle(obstacle_pts);
+            occupancy_grid.addObstacle(obstacle_pts); // adds a series of points in the form of stdvectorvectordim that are the vertices of the convex hull
         } else if(type == "ellipsoid") {
             VectorDIM center;
             MatrixDIMDIM mtr;
@@ -512,7 +512,8 @@ int main(int argc, char* argv[]) {
         for(std::size_t i = 0; i < num_robots; i++) {
             robot_collision_boxes[i]
                     = collision_shapes[i]->boundingBox(states[i][0]);// this is where the current states are extracted for the bounding boxes for all the drones 
-            //std::cout << "aligned_box: " << robot_collision_boxes[i].BottomLeft << std::endl;
+            std::cout << "aligned_box " << i << " centre x: " << (robot_collision_boxes[i].center())[0] << std::endl;
+            std::cout << "aligned_box " << i << " centre y: " << (robot_collision_boxes[i].center())[1] << std::endl;
             //std::cout << "Drone " << i << " last known position: " << states[i][0] << std::endl;
             old_position_state[i] = states[i][0];
         

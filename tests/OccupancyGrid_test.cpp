@@ -14,6 +14,7 @@ TEST_CASE("OccupancyGrid.getIndex() test", "OccupancyGrid") {
     REQUIRE(idx == Index(0, 0));
 
     idx = grid.getIndex(Coordinate(-0.6, 0.3));
+    std::cout << idx[0] << std::endl;
     REQUIRE(idx == Index(-2, 0));
 
     idx = grid.getIndex(Coordinate(0.5, 0.4));
@@ -52,3 +53,4 @@ TEST_CASE("OccupancyGrid.getCenter() test", "OccupancyGrid") {
     center = grid.getCenter(Coordinate(122.3, 12.7, 11));
     REQUIRE((center - Coordinate(122.25, 12.6, 10.85)).squaredNorm() < 1e-9);
 }
+

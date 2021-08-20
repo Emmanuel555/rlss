@@ -159,7 +159,7 @@ void generate_optimization_problem(
     mathematica.selfCollisionBox(
             colshape->boundingBox(current_robot_state[0]));
 
-    // robot to robot avoidance constraints for the first piece
+    // robot to robot avoidance constraints for the first piece - 1
     std::vector<Hyperplane> robot_to_robot_hps
             = robot_safety_hyperplanes<T, DIM>(
                     current_robot_state[0],
@@ -208,7 +208,7 @@ void generate_optimization_problem(
     }
 
 
-    // robot to obstacle avoidance constraints for all pieces
+    // robot to obstacle avoidance constraints for all pieces -2
     for (
         std::size_t p_idx = 0;
         p_idx < qpgen.numPieces();
@@ -289,7 +289,7 @@ void generate_optimization_problem(
     }
 
 
-    // continuity constraints
+    // continuity constraints - 3
     for(
         std::size_t p_idx = 0;
         p_idx < qpgen.numPieces() - 1;
@@ -326,7 +326,7 @@ void generate_optimization_problem(
         }
     }
 
-    // initial point constraints
+    // initial point constraints - 4
     for(unsigned int k = 0; k <= contupto; k++) {
         debug_message(
             "adding initial point constraint for degree ",
@@ -368,7 +368,7 @@ void generate_optimization_problem(
 
 
 
-    // eval cost
+    // eval cost taking into acc the above constraints
     T duration_sum_before = 0;
     for(
         std::size_t p_idx = 0;
