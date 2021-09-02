@@ -259,7 +259,7 @@ public:
             }
         }
 
-        occupancy_grid.clearTemporaryObstacles();
+        occupancy_grid.clearTemporaryObstacles(); // occupancy grid is cleared and restarted 
 
         auto plan_end_time = std::chrono::steady_clock::now();
         duration_statistics.setPlanningDuration(

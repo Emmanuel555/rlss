@@ -50,3 +50,22 @@ target_compile_definitions(
 
 
 add_dependencies(build_rlss_examples 3d_sim)
+
+add_executable(
+    dyn_3d_sim
+    examples/dyn_simulation.cpp
+)
+
+target_link_libraries(
+    dyn_3d_sim PUBLIC
+    rlss
+)
+
+
+target_compile_definitions(
+    dyn_3d_sim PUBLIC
+    SIMULATION_DIMENSION=3
+)
+
+
+add_dependencies(build_rlss_examples dyn_3d_sim)

@@ -1,6 +1,6 @@
 {
     "base_path": "/home/emmanuel/rlss_ws/src/rlss_ros/third_party/rlss/",
-    "obstacle_directory": "examples/inputs/obstacle_descriptions/3d/gazebo_sim/",
+    "obstacle_directory": "examples/inputs/obstacle_descriptions/3d/warehouse/",
     "robot_parameters_directory": "examples/inputs/demo_descriptions/3d/try_demo/",
     "replanning_period": 0.1,
     "reach_distance": 0.5, 
@@ -39,8 +39,8 @@
         [-0.6, -0.6, -0.25], 
         [0.6, 0.6, 0.25]
     ],
-    "optimization_obstacle_check_distance": 1.0,
-    "optimizer": "rlss-soft",
+    "optimization_obstacle_check_distance": 0.5,
+    "optimizer": "rlss-hard-soft",
     "soft_optimization_parameters": {
         "robot_to_robot_hyperplane_constraints": {
             "enable": true,

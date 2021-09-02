@@ -82,7 +82,12 @@ TEST_CASE("discrete search in 3D", "internal::DiscreteSearch") {
     //cout << grid3D.getIndex(Coordinate(0.3,4.0,0.5)) << endl;
     //cout << VectorDIM3(0.1, 0.1, 0.1) << endl;
     //cout << grid3D.getNeighbors(Index(1.0,1.0,0.5)).size() << endl;
-    //cout << grid.getNeighbors(Index(1.0,1.0))[0] << endl;
+    cout << "1 " << grid3D.getNeighbors(Index(1.0,1.0,0.0))[0] << endl;
+    cout << "2 " << grid3D.getNeighbors(Index(1.0,1.0,0.0))[1] << endl;
+    cout << "3 " << grid3D.getNeighbors(Index(1.0,1.0,0.0))[2] << endl;
+    cout << "4 " << grid3D.getNeighbors(Index(1.0,1.0,0.0))[3] << endl;
+    cout << "5 " << grid3D.getNeighbors(Index(1.0,1.0,0.0))[4] << endl;
+    cout << "6 " << grid3D.getNeighbors(Index(1.0,1.0,0.0))[5] << endl;
     //cout << grid.getNeighbors(Index(1.0,1.0))[1] << endl;
     //cout << grid.getNeighbors(Index(1.0,1.0))[2] << endl;
     //cout << grid.getNeighbors(Index(1.0,1.0))[3] << endl;
