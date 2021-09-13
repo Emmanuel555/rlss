@@ -1,6 +1,7 @@
 build/*
 build*/*
 /visualization_tool/core/*.pyc
+/tools/vis/3d/*
 .vscode/
 .clangd/
 compile_commands.json
