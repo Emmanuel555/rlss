@@ -55,6 +55,7 @@ public:
                 target_position
         );
         neighbors.push_back(occupancy_grid.getIndex(target_position));
+        /* this part n below is causing all this shit */
         for(const Index& neigh_idx: neighbors) {
             if(
                 /*reachable_indices.find(neigh_idx) != reachable_indices.end()

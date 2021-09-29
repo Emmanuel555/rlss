@@ -54,12 +54,17 @@ public:
         DurationStatistics duration_statistics;
         SuccessFailureStatistics sf_statistics;
 
+        std::cout << current_robot_state[0][0] << std::endl;
+        std::cout << typeid(current_time).name() << std::endl;
+        std::cout << m_rescaling_duration_multipler << std::endl;
+        std::cout << m_maximum_rescaling_count << std::endl;
 
         auto plan_start_time = std::chrono::steady_clock::now();
 
         debug_message("planning...");
 
         for(std::size_t i = 0; i < current_robot_state.size(); i++) {
+            //std::cout << "fking hell_2" << std::endl;
             debug_message(
                     "current robot state at degree ",
                     i,
@@ -77,10 +82,11 @@ public:
                     )
             );
         }
-
-
+        
         for(const auto& colbox: other_robot_collision_shape_bounding_boxes) {
+            //std::cout << "fking hell_4" << std::endl;
             occupancy_grid.addTemporaryObstacle(colbox);
+            //std::cout << "fking hell_5" << std::endl;
         }
 
         debug_message("current position is ",
@@ -90,31 +96,43 @@ public:
         debug_message("goalSelection...");
 
 
+        std::cout << "fking hell_6" << std::endl;
+        std::cout << current_time << std::endl;
 
         auto goal_selector_start_time = std::chrono::steady_clock::now();
+        
         std::optional<std::pair<VectorDIM, T>> goal_and_duration
                 = m_goal_selector->select(current_robot_state[0],
                                       occupancy_grid,
                                       current_time
                 );
+
+        std::cout << current_time << std::endl;
+        std::cout << "fking hell_3" << std::endl;
+        std::cout << goal_and_duration->first[0] << std::endl;
+        std::cout << goal_and_duration->second << std::endl;        
+
         auto goal_selector_end_time = std::chrono::steady_clock::now();
+        std::cout << "fking hell_8" << std::endl;
         duration_statistics.setGoalSelectionDuration(
             std::chrono::duration_cast<std::chrono::microseconds>(
                 goal_selector_end_time - goal_selector_start_time
             ).count()
         );
-
+        std::cout << "fking hell_9" << std::endl;
+        
         if(!goal_and_duration) {
             debug_message(
                     internal::debug::colors::RED,
                     "goalSelection failed.",
                     internal::debug::colors::RESET
             );
-
+            std::cout << "fking hell_10" << std::endl;
             sf_statistics.setGoalSelectionSuccessFail(false);
             occupancy_grid.clearTemporaryObstacles();
-            return std::nullopt;
+            return std::nullopt; // this was where we ended
         } else {
+            std::cout << "made it" << std::endl;
             sf_statistics.setGoalSelectionSuccessFail(true);
             debug_message(
                     internal::debug::colors::GREEN,
@@ -123,7 +141,9 @@ public:
             );
         }
 
-
+        std::cout << goal_and_duration->first[0] << std::endl;
+        std::cout << goal_and_duration->second << std::endl;        
+        
         debug_message("goal position: ", goal_and_duration->first.transpose());
         debug_message("actual time horizon: ", goal_and_duration->second);
 
@@ -147,6 +167,7 @@ public:
         );
 
         if(!segments_and_durations) {
+            std::cout << occupancy_grid.size() << std::endl;
             debug_message(
                     internal::debug::colors::RED,
                     "discreteSearch failed.",
@@ -156,6 +177,7 @@ public:
             sf_statistics.setDiscreteSearchSuccessFail(false);
             return std::nullopt;
         } else {
+            std::cout << "made it 2" << std::endl;
             debug_message(
                     internal::debug::colors::GREEN,
                     "discreteSearch success.",
@@ -177,6 +199,7 @@ public:
         assert(segments.size() == durations.size() + 1);
 
         for(std::size_t i = 0; i < durations.size(); i++) {
+            //std::cout << "made it here" << std::endl;
             debug_message(
                     "segment ",
                     i,
@@ -190,7 +213,6 @@ public:
         }
 
         std::optional<PiecewiseCurve> resulting_curve = std::nullopt; // equates to final solution
-
         for(unsigned int c = 0; c < m_maximum_rescaling_count; c++) {
             debug_message("trajectoryOptimization...");
             auto trajectory_optimization_start_time
@@ -214,6 +236,7 @@ public:
             );
 
             if(resulting_curve == std::nullopt) {
+                std::cout << "fker failed" << std::endl;
                 debug_message(
                         internal::debug::colors::RED,
                         "trajectoryOptimization failed.",

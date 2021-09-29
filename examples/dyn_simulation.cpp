@@ -514,9 +514,6 @@ int main(int argc, char* argv[]) {
 
         rlss::debug_message("collecting robot shapes...");
 
-        
-        
-        
         std::vector<AlignedBox> robot_collision_boxes(num_robots); // specifiy that within robot_collision_boxes, theres 2 since 2 robots for this example
         for(std::size_t i = 0; i < num_robots; i++) {
             robot_collision_boxes[i]
@@ -533,7 +530,7 @@ int main(int argc, char* argv[]) {
 
         // generate additional stuff to add onto the occupancy grid that is dynamic
                 
-        //std::cout << "no of neighbours of drone 1: " << occupancy_grid.getNeighbors((old_position_state[1])).size() << std::endl;
+        // std::cout << "no of neighbours of drone 1: " << occupancy_grid.getNeighbors((old_position_state[1])).size() << std::endl;
         occupancy_grid.setOccupancy(occupancy_grid.getNeighbors((simulated_obstacle[0]))[0]);
         json_builder.addOccupancyGridToCurrentFrame(occupancy_grid);
         std::cout << "num obstacles: " << occupancy_grid.size() << std::endl;
