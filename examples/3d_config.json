@@ -1,6 +1,6 @@
 {
     "base_path": "/home/emmanuel/rlss_ws/src/rlss_ros/third_party/rlss/",
-    "obstacle_directory": "examples/inputs/obstacle_descriptions/3d/warehouse/",
+    "obstacle_directory": "examples/inputs/obstacle_descriptions/3d/1obstacle/",
     "robot_parameters_directory": "examples/inputs/demo_descriptions/3d/try_demo/",
     "replanning_period": 0.1,
     "reach_distance": 0.5, 

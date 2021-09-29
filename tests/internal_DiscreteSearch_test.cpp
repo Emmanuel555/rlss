@@ -38,12 +38,12 @@ TEST_CASE("discrete search in 3D", "internal::DiscreteSearch") {
     //grid.setOccupancy(Index(5,1));
 
     OccupancyGrid grid3D(Coordinate(0.5, 0.5, 0.5)); // per grid size
-    grid3D.setOccupancy(Index(1,5,0.5));
+    /*grid3D.setOccupancy(Index(1,5,0.5));
     grid3D.setOccupancy(Index(1,4,0.5));
     grid3D.setOccupancy(Index(2,1,0.5));
     grid3D.setOccupancy(Index(3,2));
     grid3D.setOccupancy(Index(3,1));
-    grid3D.setOccupancy(Index(5,1,0.5));
+    grid3D.setOccupancy(Index(5,1,0.5));*/
 
 
     // grid.setOccupancy(Index(1,3));
@@ -58,13 +58,13 @@ TEST_CASE("discrete search in 3D", "internal::DiscreteSearch") {
     //Coordinate start_position(0.74,0.75,0.0);
     //Coordinate goal_position(3.76,3.75,0.0);
 
-    auto al_collision_shape = make_shared<AlignedBoxCollisionShape>(AlignedBox(VectorDIM3(-0.1, -0.1, -0.1), VectorDIM3(0.1, 0.1, 0.1))); // add in the 3D to do* 
+    auto al_collision_shape = make_shared<AlignedBoxCollisionShape>(AlignedBox(VectorDIM3(-0.1, -0.1, 0.0), VectorDIM3(1.0, 1.0, 1.0))); // add in the 3D to do* 
     auto collision_shape = static_pointer_cast<CollisionShape>(al_collision_shape);
-    Coordinate start_position(0.3,0.3,0.3); // starting coordinate has to ensure that space is accounted for the collision shapes
-    Coordinate goal_position(0.3,3.0, 0.5);
+    Coordinate start_position(0.0,0.0,0.0); // starting coordinate has to ensure that space is accounted for the collision shapes
+    Coordinate goal_position(9.0,0.0,1.5);
 
     //AlignedBox workspace(VectorDIM(0, 0, 0), VectorDIM(4.5, 4.5, 4.5));
-    AlignedBox workspace(VectorDIM3(0, 0, 0), VectorDIM3(5.0, 5.0, 5.0));
+    AlignedBox workspace(VectorDIM3(-50, -50, 0), VectorDIM3(50.0, 50.0, 50.0));
 
     auto result = rlss::internal::discreteSearch<double, DIM3>(
                             start_position, 
@@ -77,17 +77,18 @@ TEST_CASE("discrete search in 3D", "internal::DiscreteSearch") {
     //REQUIRE(result != std::nullopt);
     //std::cout << TestVector(1.0,1.0) << std::endl;
     StdVectorVectorDIM result_vector = *result;
-    //cout << result_vector.size() << endl;
+    cout << result_vector.size() << endl;
     //cout << grid3D.getCenter(Index(1.0,1.0)) << endl;
     //cout << grid3D.getIndex(Coordinate(0.3,4.0,0.5)) << endl;
     //cout << VectorDIM3(0.1, 0.1, 0.1) << endl;
     //cout << grid3D.getNeighbors(Index(1.0,1.0,0.5)).size() << endl;
-    cout << "1 " << grid3D.getNeighbors(Index(1.0,1.0,0.0))[0] << endl;
-    cout << "2 " << grid3D.getNeighbors(Index(1.0,1.0,0.0))[1] << endl;
-    cout << "3 " << grid3D.getNeighbors(Index(1.0,1.0,0.0))[2] << endl;
-    cout << "4 " << grid3D.getNeighbors(Index(1.0,1.0,0.0))[3] << endl;
-    cout << "5 " << grid3D.getNeighbors(Index(1.0,1.0,0.0))[4] << endl;
-    cout << "6 " << grid3D.getNeighbors(Index(1.0,1.0,0.0))[5] << endl;
+    
+    //cout << "1 " << grid3D.getNeighbors(Index(1.0,1.0,0.0))[0] << endl;
+    //cout << "2 " << grid3D.getNeighbors(Index(1.0,1.0,0.0))[1] << endl;
+    //cout << "3 " << grid3D.getNeighbors(Index(1.0,1.0,0.0))[2] << endl;
+    //cout << "4 " << grid3D.getNeighbors(Index(1.0,1.0,0.0))[3] << endl;
+    //cout << "5 " << grid3D.getNeighbors(Index(1.0,1.0,0.0))[4] << endl;
+    //cout << "6 " << grid3D.getNeighbors(Index(1.0,1.0,0.0))[5] << endl;
     //cout << grid.getNeighbors(Index(1.0,1.0))[1] << endl;
     //cout << grid.getNeighbors(Index(1.0,1.0))[2] << endl;
     //cout << grid.getNeighbors(Index(1.0,1.0))[3] << endl;
@@ -104,18 +105,18 @@ TEST_CASE("discrete search in 3D", "internal::DiscreteSearch") {
     for(std::size_t i = 0; i < result_vector.size() - 1; i++) {
         total_path_length
                 += (result_vector[i+1] - result_vector[i]).norm(); // norm refers to magnitude
-        cout << (result_vector[i+1] - result_vector[i]).norm() << endl;
+        //cout << (result_vector[i+1] - result_vector[i]).norm() << endl;
         //cout << total_path_length << endl; //2.705
     }
 
-    cout << result_vector.size() << endl; // discete search soln. = 3
-    cout << total_path_length << endl; // total path length norm = 2.7074
+    //cout << result_vector.size() << endl; // discete search soln. = 3
+    //cout << total_path_length << endl; // total path length norm = 2.7074
     //cout << result_vector[0] << endl;
     //cout << result_vector[1] << endl;
     //cout << result_vector[2] << endl;
     vector<int> num_pieces(4);
     num_pieces[0] = 2;
-    cout << num_pieces[0] << endl;    
+    //cout << num_pieces[0] << endl;    
 
     //cout << total_path_length;
 
