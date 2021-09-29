@@ -128,6 +128,7 @@ public:
                     internal::debug::colors::RESET
             );
             std::cout << "fking hell_10" << std::endl;
+            std::cout << occupancy_grid.size() << std::endl;
             sf_statistics.setGoalSelectionSuccessFail(false);
             occupancy_grid.clearTemporaryObstacles();
             return std::nullopt; // this was where we ended
