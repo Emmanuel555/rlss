@@ -51,8 +51,27 @@ public:
                         m_collision_shape
                 );
 
+        std::cout << "?????" << std::endl;
+        std::cout << current_position[0] << std::endl;
+        std::cout << current_position[1] << std::endl;
+        std::cout << current_position[2] << std::endl;
+        std::cout << goal_position[0] << std::endl;
+        std::cout << goal_position[1] << std::endl;
+        std::cout << goal_position[2] << std::endl;
+        std::cout << time_horizon << std::endl;
+
 
         if(!discrete_path_opt) {
+            std::cout << "?????" << std::endl;
+            std::cout << current_position[0] << std::endl;
+            std::cout << current_position[1] << std::endl;
+            std::cout << current_position[2] << std::endl;
+            std::cout << typeid(goal_position[0]).name() << std::endl;
+            std::cout << goal_position[1] << std::endl;
+            std::cout << goal_position[2] << std::endl;
+            std::cout << time_horizon << std::endl;
+            //std::cout << m_collision_shape. << std::endl;
+            std::cout << (m_collision_shape->boundingBox(current_position).center())[0] << std::endl;
             return std::nullopt;
         }
 

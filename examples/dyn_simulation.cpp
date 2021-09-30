@@ -514,6 +514,11 @@ int main(int argc, char* argv[]) {
 
         rlss::debug_message("collecting robot shapes...");
 
+        //std::cout << typeid(occupancy_grid).name() << std::endl;
+        std::cout << (original_trajectories[0].eval(0, 0))[0] << std::endl;
+        std::cout << (original_trajectories[0].eval(0, 0))[1] << std::endl;
+        std::cout << (original_trajectories[0].eval(0, 0))[2] << std::endl;
+        
         std::vector<AlignedBox> robot_collision_boxes(num_robots); // specifiy that within robot_collision_boxes, theres 2 since 2 robots for this example
         for(std::size_t i = 0; i < num_robots; i++) {
             robot_collision_boxes[i]

@@ -133,7 +133,7 @@ public:
         }
 
         T actual_horizon = target_time - current_time;
-        return std::make_pair(target_position, actual_horizon); //horizon shud be 8s, and target position = m_original_trajectory.eval(current time + horizon, 0)
+        return std::make_pair(target_position, target_time); //horizon shud be 8s, and target position = m_original_trajectory.eval(current time + horizon, 0)
     }
 
     void setOriginalTrajectory(const PiecewiseCurve& origtraj) {

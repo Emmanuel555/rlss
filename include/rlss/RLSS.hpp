@@ -55,9 +55,14 @@ public:
         SuccessFailureStatistics sf_statistics;
 
         std::cout << current_robot_state[0][0] << std::endl;
-        std::cout << typeid(current_time).name() << std::endl;
+        std::cout << current_robot_state[0][1] << std::endl;
+        std::cout << current_robot_state[0][2] << std::endl;
+        //std::cout << typeid(current_time).name() << std::endl;
+        //std::cout << current_time << std::endl;
+        //std::cout << typeid(other_robot_collision_shape_bounding_boxes).name() << std::endl;
+        //std::cout << typeid(occupancy_grid).name() << std::endl;
         std::cout << m_rescaling_duration_multipler << std::endl;
-        std::cout << m_maximum_rescaling_count << std::endl;
+        //std::cout << m_maximum_rescaling_count << std::endl;
 
         auto plan_start_time = std::chrono::steady_clock::now();
 
@@ -96,8 +101,8 @@ public:
         debug_message("goalSelection...");
 
 
-        std::cout << "fking hell_6" << std::endl;
-        std::cout << current_time << std::endl;
+        //std::cout << "fking hell_6" << std::endl;
+        //std::cout << current_time << std::endl;
 
         auto goal_selector_start_time = std::chrono::steady_clock::now();
         
@@ -108,18 +113,17 @@ public:
                 );
 
         std::cout << current_time << std::endl;
-        std::cout << "fking hell_3" << std::endl;
+        //std::cout << "fking hell_3" << std::endl;
         std::cout << goal_and_duration->first[0] << std::endl;
         std::cout << goal_and_duration->second << std::endl;        
 
         auto goal_selector_end_time = std::chrono::steady_clock::now();
-        std::cout << "fking hell_8" << std::endl;
+
         duration_statistics.setGoalSelectionDuration(
             std::chrono::duration_cast<std::chrono::microseconds>(
                 goal_selector_end_time - goal_selector_start_time
             ).count()
         );
-        std::cout << "fking hell_9" << std::endl;
         
         if(!goal_and_duration) {
             debug_message(
@@ -127,7 +131,7 @@ public:
                     "goalSelection failed.",
                     internal::debug::colors::RESET
             );
-            std::cout << "fking hell_10" << std::endl;
+            //std::cout << "fking hell_10" << std::endl;
             std::cout << occupancy_grid.size() << std::endl;
             sf_statistics.setGoalSelectionSuccessFail(false);
             occupancy_grid.clearTemporaryObstacles();
@@ -143,6 +147,8 @@ public:
         }
 
         std::cout << goal_and_duration->first[0] << std::endl;
+        std::cout << goal_and_duration->first[1] << std::endl;
+        std::cout << goal_and_duration->first[2] << std::endl;
         std::cout << goal_and_duration->second << std::endl;        
         
         debug_message("goal position: ", goal_and_duration->first.transpose());
@@ -167,7 +173,9 @@ public:
                 ).count()
         );
 
-        if(!segments_and_durations) {
+        if(!segments_and_durations) { ///////
+            std::cout << segments_and_durations->first.size() << std::endl;
+            std::cout << segments_and_durations->second.size() << std::endl;
             std::cout << occupancy_grid.size() << std::endl;
             debug_message(
                     internal::debug::colors::RED,
@@ -178,6 +186,8 @@ public:
             sf_statistics.setDiscreteSearchSuccessFail(false);
             return std::nullopt;
         } else {
+            std::cout << segments_and_durations->first.size() << std::endl;
+            std::cout << segments_and_durations->second.size() << std::endl;
             std::cout << "made it 2" << std::endl;
             debug_message(
                     internal::debug::colors::GREEN,
