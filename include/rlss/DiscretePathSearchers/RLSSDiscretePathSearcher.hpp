@@ -33,6 +33,20 @@ public:
 
     }
 
+
+    /* auto discrete_path_test =
+                rlss::internal::discreteSearch<T, DIM>(
+                        current_position, // if current pos is stuck, current time is just gonna drift further resulting in a further target pos which means the drone needs to fly there faster ( increased vel)
+                        goal_position,
+                        occupancy_grid,
+                        m_workspace,
+                        m_collision_shape
+                );
+
+        StdVectorVectorDIM result = *discrete_path_test;
+        std::cout << result.size() << std::endl; */
+
+
     std::optional<std::pair<StdVectorVectorDIM, std::vector<T>>>
     search(
             const VectorDIM& current_position,
