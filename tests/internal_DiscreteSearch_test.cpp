@@ -37,7 +37,7 @@ TEST_CASE("discrete search in 3D", "internal::DiscreteSearch") {
     //grid.setOccupancy(Index(3,1));
     //grid.setOccupancy(Index(5,1));
 
-    //OccupancyGrid grid3D(Coordinate(0.5, 0.5, 0.5)); // per grid size
+    OccupancyGrid grid3D(Coordinate(0.5, 0.5, 0.5)); // per grid size
     /*grid3D.setOccupancy(Index(1,5,0.5));
     grid3D.setOccupancy(Index(1,4,0.5));
     grid3D.setOccupancy(Index(2,1,0.5));
@@ -60,11 +60,11 @@ TEST_CASE("discrete search in 3D", "internal::DiscreteSearch") {
 
     auto al_collision_shape = make_shared<AlignedBoxCollisionShape>(AlignedBox(VectorDIM3(-0.1, -0.1, 0.0), VectorDIM3(1.0, 1.0, 1.0))); // add in the 3D to do* 
     auto collision_shape = static_pointer_cast<CollisionShape>(al_collision_shape);
-    Coordinate start_position(0.0,0.0,0.0); // starting coordinate has to ensure that space is accounted for the collision shapes
+    Coordinate start_position(0.034,0.045,-0.067); // starting coordinate has to ensure that space is accounted for the collision shapes
     Coordinate goal_position(9.0,0.0,1.5);
 
     //AlignedBox workspace(VectorDIM(0, 0, 0), VectorDIM(4.5, 4.5, 4.5));
-    AlignedBox workspace(VectorDIM3(-50, -50, 0), VectorDIM3(50.0, 50.0, 50.0));
+    AlignedBox workspace(VectorDIM3(-50, -50, -1), VectorDIM3(50.0, 50.0, 50.0));
 
     auto result = rlss::internal::discreteSearch<double, DIM3>(
                             start_position, 
@@ -78,6 +78,8 @@ TEST_CASE("discrete search in 3D", "internal::DiscreteSearch") {
     //std::cout << TestVector(1.0,1.0) << std::endl;
     StdVectorVectorDIM result_vector = *result;
     cout << result_vector.size() << endl;
+    std::cout << grid3D.isOccupied(start_position) << std::endl;
+    std::cout << workspace.contains(start_position) << std::endl;
     //cout << grid3D.getCenter(Index(1.0,1.0)) << endl;
     //cout << grid3D.getIndex(Coordinate(0.3,4.0,0.5)) << endl;
     //cout << VectorDIM3(0.1, 0.1, 0.1) << endl;

@@ -55,7 +55,8 @@ public:
             const OccupancyGrid& occupancy_grid
     ) override {
         time_horizon = std::max(time_horizon, m_safe_upto);
-
+        
+        std::cout << occupancy_grid.isOccupied(current_position) << std::endl;
         std::optional<StdVectorVectorDIM> discrete_path_opt =
                 rlss::internal::discreteSearch<T, DIM>(
                         current_position, // if current pos is stuck, current time is just gonna drift further resulting in a further target pos which means the drone needs to fly there faster ( increased vel)
@@ -73,6 +74,11 @@ public:
         std::cout << goal_position[1] << std::endl;
         std::cout << goal_position[2] << std::endl;
         std::cout << time_horizon << std::endl;
+        AlignedBox robot_box = m_collision_shape->boundingBox(goal_position);
+        std::cout << occupancy_grid.getIndex(current_position) << std::endl;
+        auto state_idx = occupancy_grid.getIndex(current_position);
+        auto goal_idx = occupancy_grid.getIndex(goal_position);
+        std::cout << (state_idx - goal_idx).norm() << std::endl;
 
 
         if(!discrete_path_opt) {
@@ -84,8 +90,7 @@ public:
             std::cout << goal_position[1] << std::endl;
             std::cout << goal_position[2] << std::endl;
             std::cout << time_horizon << std::endl;
-            //std::cout << m_collision_shape. << std::endl;
-            std::cout << (m_collision_shape->boundingBox(current_position).center())[0] << std::endl;
+            //std::cout << (m_collision_shape->boundingBox(current_position).center())[0] << std::endl;
             return std::nullopt;
         }
 

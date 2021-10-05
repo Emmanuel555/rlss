@@ -158,6 +158,9 @@ public:
         debug_message("discreteSearch...");
 
         auto discrete_search_start_time = std::chrono::steady_clock::now();
+
+        std::cout << occupancy_grid.isOccupied(goal_and_duration->first) << std::endl;
+        
         std::optional<std::pair<StdVectorVectorDIM, std::vector<T>>>
                 segments_and_durations =
                 m_discrete_path_searcher->search(
@@ -166,6 +169,20 @@ public:
                     goal_and_duration->second, // time horizon
                     occupancy_grid
         );
+
+        /*AlignedBox workspace(VectorDIM(-50, -50, 0), VectorDIM(50.0, 50.0, 50.0));
+        auto al_collision_shape = make_shared<AlignedBoxCollisionShape>(AlignedBox(VectorDIM(-0.1, -0.1, 0.0), VectorDIM(1.0, 1.0, 1.0))); // add in the 3D to do* 
+        auto collision_shape = static_pointer_cast<CollisionShape>(al_collision_shape);
+        auto result = rlss::internal::discreteSearch<double, DIM>(
+                            current_robot_state[0], 
+                            goal_and_duration->first, 
+                            occupancy_grid
+                            workspace, 
+                            collision_shape
+        );
+        StdVectorVectorDIM result_vector = *result;
+        ROS_INFO_STREAM (result_vector.size());*/
+
         auto discrete_search_end_time = std::chrono::steady_clock::now();
         duration_statistics.setDiscreteSearchDuration(
                 std::chrono::duration_cast<std::chrono::microseconds>(

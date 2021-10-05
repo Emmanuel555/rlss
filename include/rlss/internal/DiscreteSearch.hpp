@@ -33,6 +33,7 @@ std::optional<StdVectorVectorDIM<T, DIM>> discreteSearch(
     using CollisionShape = rlss::CollisionShape<T, DIM>;
 
 
+
     struct State {
         Coordinate position;
         Index dir;
@@ -206,8 +207,8 @@ std::optional<StdVectorVectorDIM<T, DIM>> discreteSearch(
 
         bool positionValid(const Coordinate& pos) {
             AlignedBox robot_box = m_collision_shape->boundingBox(pos);
-            return !m_occupancy_grid.isOccupied(robot_box)
-                    && m_workspace.contains(robot_box);
+            return m_workspace.contains(robot_box); 
+                //    && !m_occupancy_grid.isOccupied(robot_box); // change to using workspace as the main constraint
         }
 
         bool indexValid(const Index& idx) {
@@ -232,12 +233,22 @@ std::optional<StdVectorVectorDIM<T, DIM>> discreteSearch(
             astar(env);
     libMultiRobotPlanning::PlanResult<State, Action, int> solution;
 
+    std::cout << "fuck you" << std::endl;
+    std::cout << start_coordinate[0] << std::endl;
+    std::cout << start_coordinate[1] << std::endl;
+    std::cout << start_coordinate[2] << std::endl;
+    std::cout << env.positionValid(start_coordinate) << std::endl;
+    AlignedBox test_box = collision_shape->boundingBox(start_coordinate);
+    std::cout << occupancy_grid.isOccupied(test_box) << std::endl;
+    std::cout << workspace.contains(test_box) << std::endl;
+
     if(env.positionValid(start_coordinate)) {
         State start_state(start_coordinate);
+        std::cout << "fuck you" << std::endl;
         bool success = astar.search(start_state, solution);
-        if(!success) {
+        /*if(!success) {
             return std::nullopt;
-        }
+        }*/
         
         StdVectorVectorDIM segments;
         segments.push_back(solution.states[0].first.position);
