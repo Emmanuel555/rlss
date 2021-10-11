@@ -28,6 +28,11 @@ public:
                 param += m_search_step
             ) {
                 T norm = curve.eval(param, d).norm(); //curve.eval(time_param, derivative)
+
+                std::cout << "time maxparam of curve..." << curve.maxParameter() << std::endl;
+                std::cout << "euclidean distance from goal to origin..." << (curve.eval(curve.maxParameter(),d)).norm() << std::endl;
+
+
                 if(norm > l) {
                     debug_message(
                             internal::debug::colors::RED,
