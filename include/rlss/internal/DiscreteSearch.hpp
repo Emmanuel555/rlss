@@ -33,6 +33,12 @@ std::optional<StdVectorVectorDIM<T, DIM>> discreteSearch(
     using CollisionShape = rlss::CollisionShape<T, DIM>;
 
 
+    Index starter_idx = occupancy_grid.getIndex(start_coordinate);
+    OccupancyGrid trial_occupancy = occupancy_grid;
+    //trial_occupancy.setOccupancy(Coordinate(0.034,0.045,-0.067));
+    //trial_occupancy.removeOccupancy(start_coordinate);
+    //trial_occupancy.clearTemporaryObstacles(); // this works 
+    //std::cout << "Hello_1" << "  " << trial_occupancy.isOccupied(start_coordinate) << std::endl; // even tho it says clear temp obs, start coordinate is still occupied somehow 
 
     struct State {
         Coordinate position;
@@ -80,7 +86,8 @@ std::optional<StdVectorVectorDIM<T, DIM>> discreteSearch(
             int h = 0;
             Index state_idx = m_occupancy_grid.getIndex(s.position);
             Index goal_idx = m_occupancy_grid.getIndex(m_goal);
-            return (state_idx - goal_idx).norm();
+            //std::cout << "occupancy bool in admissible heuristics" << "  " << m_occupancy_grid.isOccupied(s.position) << std::endl;
+            return (state_idx - goal_idx).norm(); // 18
 //            for(unsigned int d = 0; d < DIM; d++) {
 //                h += std::abs(state_idx(d) - goal_idx(d));
 //            }
@@ -207,8 +214,8 @@ std::optional<StdVectorVectorDIM<T, DIM>> discreteSearch(
 
         bool positionValid(const Coordinate& pos) {
             AlignedBox robot_box = m_collision_shape->boundingBox(pos);
-            return m_workspace.contains(robot_box); 
-                //    && !m_occupancy_grid.isOccupied(robot_box); // change to using workspace as the main constraint
+            return m_workspace.contains(robot_box) // the robot's location must remain 
+                    && !m_occupancy_grid.isOccupied(robot_box); // true if occupancy grid isnt occupied at where the robot currently is
         }
 
         bool indexValid(const Index& idx) {
@@ -222,33 +229,43 @@ std::optional<StdVectorVectorDIM<T, DIM>> discreteSearch(
         std::shared_ptr<CollisionShape> m_collision_shape;
         const Coordinate& m_goal;
     };
-
+    
+    
     Environment env(
             occupancy_grid,
+            //trial_occupancy,
             workspace,
             collision_shape,
             goal_coordinate
     );
+
+    
     libMultiRobotPlanning::AStar<State, Action, int, Environment, StateHasher>
             astar(env);
     libMultiRobotPlanning::PlanResult<State, Action, int> solution;
 
-    std::cout << "fuck you" << std::endl;
+    /*std::cout << "Coordinates and test boxes" << std::endl;
     std::cout << start_coordinate[0] << std::endl;
     std::cout << start_coordinate[1] << std::endl;
     std::cout << start_coordinate[2] << std::endl;
     std::cout << env.positionValid(start_coordinate) << std::endl;
     AlignedBox test_box = collision_shape->boundingBox(start_coordinate);
-    std::cout << occupancy_grid.isOccupied(test_box) << std::endl;
+    std::cout << trial_occupancy.isOccupied(start_coordinate) << std::endl;
     std::cout << workspace.contains(test_box) << std::endl;
+    std::cout << (test_box.max())[0] << std::endl;
+    std::cout << (test_box.min())[0] << std::endl;
+    std::cout << (test_box.center())[0] << std::endl;*/
+    
 
     if(env.positionValid(start_coordinate)) {
         State start_state(start_coordinate);
-        std::cout << "fuck you" << std::endl;
+        //std::cout << "testing heuristics" << std::endl;
+        //std::cout << env.admissibleHeuristic(start_state) << std::endl;
         bool success = astar.search(start_state, solution);
-        /*if(!success) {
+        if(!success) {
+            std::cout << "failed astar" << std::endl;
             return std::nullopt;
-        }*/
+        }
         
         StdVectorVectorDIM segments;
         segments.push_back(solution.states[0].first.position);

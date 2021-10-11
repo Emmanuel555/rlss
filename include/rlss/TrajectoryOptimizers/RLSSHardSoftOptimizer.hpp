@@ -27,13 +27,13 @@ namespace rlss {
 
         RLSSHardSoftOptimizer(
             std::shared_ptr<CollisionShape> colshape,
-            const PiecewiseCurveQPGenerator& qpgen,
+            const PiecewiseCurveQPGenerator& qpgen, // PiecewiseCurveQPGenerator qp_generator
             const AlignedBox& ws,
             unsigned int contupto,
-            const std::vector<std::pair<unsigned int, T>>& lambdas,
-            const std::vector<T>& thetas,
+            const std::vector<std::pair<unsigned int, T>>& lambdas, // integrated_squared_derivative_weights
+            const std::vector<T>& thetas, // piece_endpoint_cost_weights
             const std::unordered_map<std::string, std::pair<bool, T>>&
-                    soft_parameters,
+                    soft_parameters, // soft_optimization_parameters
             T obstacle_check_distance
         ): m_collision_shape(colshape),
            m_qp_generator(qpgen),
@@ -47,7 +47,6 @@ namespace rlss {
 
         }
 
-
         // returns std::nullopt when optimization fails
         std::optional<PiecewiseCurve> optimize(
                 const StdVectorVectorDIM& segments,
@@ -56,6 +55,14 @@ namespace rlss {
                 const OccupancyGrid& occupancy_grid,
                 const StdVectorVectorDIM& current_robot_state
         )  override {
+
+            /*std::cout << "Params..." << std::endl;
+            std::cout << "r2r true?..." << m_soft_parameters["robot_to_robot_hyperplane_constraints"].first << std::endl;
+            std::cout << m_obstacle_check_distance << std::endl;
+            std::cout << segments.size() << std::endl;
+            std::cout << occupancy_grid.size() << std::endl;
+            std::cout << current_robot_state[0][0] << std::endl;
+            std::cout << oth_rbt_col_shape_bboxes.size() << std::endl;*/
 
             internal::MathematicaWriter<T, DIM> mathematica;
 
@@ -77,10 +84,11 @@ namespace rlss {
                         m_soft_parameters
                 );
             } catch(...) {
+                std::cout << "Caught here..." << std::endl;
                 return std::nullopt;
             }
 
-
+         
             QPWrappers::RLSS_HARD_QP_SOLVER::Engine<T> solver;
             solver.setFeasibilityTolerance(1e-9);
             auto initial_guess = m_qp_generator.getDVarsForSegments(segments);
@@ -91,14 +99,17 @@ namespace rlss {
                 ret = solver.next(
                         m_qp_generator.getProblem(), soln, initial_guess);
             } catch (...) {
+            std::cout << "generator problem failed..." << std::endl;
             }
             debug_message("hard optimization return value: ", ret);
 
             if(ret == QPWrappers::OptReturnType::Optimal) {
                 auto result = m_qp_generator.extractCurve(soln);
                 mathematica.piecewiseCurve(result);
+                std::cout << "optimal..." << std::endl;
                 return result;
             } else {
+                std::cout << "non-optimal..." << std::endl;
                 auto soft_problem = m_qp_generator.getProblem().convert_to_soft();
                 Vector soft_initial_guess(soft_problem.num_vars());
                 soft_initial_guess.setZero();
@@ -117,8 +128,10 @@ namespace rlss {
                         = soft_solution.block(0, 0, initial_guess.rows(), 1);
                     auto result = m_qp_generator.extractCurve(soft_solution_primary);
                     mathematica.piecewiseCurve(result);
+                    std::cout << "optimal..." << std::endl;
                     return result;
                 } else {
+                    std::cout << "caught at the end..." << std::endl;
                     return std::nullopt;
                 }
             }

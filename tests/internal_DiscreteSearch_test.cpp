@@ -38,9 +38,10 @@ TEST_CASE("discrete search in 3D", "internal::DiscreteSearch") {
     //grid.setOccupancy(Index(5,1));
 
     OccupancyGrid grid3D(Coordinate(0.5, 0.5, 0.5)); // per grid size
-    /*grid3D.setOccupancy(Index(1,5,0.5));
-    grid3D.setOccupancy(Index(1,4,0.5));
-    grid3D.setOccupancy(Index(2,1,0.5));
+    grid3D.setOccupancy(Coordinate(0.034,0.045,-0.067));
+    //grid3D.setOccupancy(Index(1,4,0.5));
+    //grid3D.removeOccupancy(Coordinate(0.034,0.045,-0.067));
+    /*grid3D.setOccupancy(Index(2,1,0.5));
     grid3D.setOccupancy(Index(3,2));
     grid3D.setOccupancy(Index(3,1));
     grid3D.setOccupancy(Index(5,1,0.5));*/
@@ -78,7 +79,10 @@ TEST_CASE("discrete search in 3D", "internal::DiscreteSearch") {
     //std::cout << TestVector(1.0,1.0) << std::endl;
     StdVectorVectorDIM result_vector = *result;
     cout << result_vector.size() << endl;
-    std::cout << grid3D.isOccupied(start_position) << std::endl;
+    std::cout << "it should be occupied right?" << "  " << grid3D.isOccupied(Index(0.034,0.045,-0.067)) << std::endl;
+    std::cout << "it should be occupied right?" << "  " << grid3D.isOccupied(Index(1,4,0.5)) << std::endl;
+    //grid3D.removeOccupancy(Index(1,5,0.5));
+    //std::cout << grid3D.isOccupied(Index(1,5,0.5)) << std::endl;
     std::cout << workspace.contains(start_position) << std::endl;
     //cout << grid3D.getCenter(Index(1.0,1.0)) << endl;
     //cout << grid3D.getIndex(Coordinate(0.3,4.0,0.5)) << endl;
@@ -98,9 +102,9 @@ TEST_CASE("discrete search in 3D", "internal::DiscreteSearch") {
 
 
     result_vector = rlss::internal::firstSegmentFix<double, DIM3>(result_vector);
-    //cout << result_vector[0].norm() << endl;
-    //cout << result_vector[0] << endl;
-    //cout << result_vector[2] << endl;
+    cout << result_vector[0].norm() << endl;
+    cout << result_vector[1] << endl;
+    cout << result_vector[2] << endl;
 
 
     auto total_path_length = 0.0;

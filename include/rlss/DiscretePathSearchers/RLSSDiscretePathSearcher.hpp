@@ -54,9 +54,9 @@ public:
             T time_horizon, // probably taken from desired time horizon in RLSS::planner
             const OccupancyGrid& occupancy_grid
     ) override {
+
         time_horizon = std::max(time_horizon, m_safe_upto);
-        
-        std::cout << occupancy_grid.isOccupied(current_position) << std::endl;
+
         std::optional<StdVectorVectorDIM> discrete_path_opt =
                 rlss::internal::discreteSearch<T, DIM>(
                         current_position, // if current pos is stuck, current time is just gonna drift further resulting in a further target pos which means the drone needs to fly there faster ( increased vel)
@@ -66,35 +66,24 @@ public:
                         m_collision_shape
                 );
 
-        std::cout << "?????" << std::endl;
-        std::cout << current_position[0] << std::endl;
-        std::cout << current_position[1] << std::endl;
-        std::cout << current_position[2] << std::endl;
-        std::cout << goal_position[0] << std::endl;
-        std::cout << goal_position[1] << std::endl;
-        std::cout << goal_position[2] << std::endl;
-        std::cout << time_horizon << std::endl;
-        AlignedBox robot_box = m_collision_shape->boundingBox(goal_position);
-        std::cout << occupancy_grid.getIndex(current_position) << std::endl;
-        auto state_idx = occupancy_grid.getIndex(current_position);
-        auto goal_idx = occupancy_grid.getIndex(goal_position);
-        std::cout << (state_idx - goal_idx).norm() << std::endl;
-
-
         if(!discrete_path_opt) {
-            std::cout << "?????" << std::endl;
-            std::cout << current_position[0] << std::endl;
-            std::cout << current_position[1] << std::endl;
-            std::cout << current_position[2] << std::endl;
-            std::cout << typeid(goal_position[0]).name() << std::endl;
-            std::cout << goal_position[1] << std::endl;
-            std::cout << goal_position[2] << std::endl;
-            std::cout << time_horizon << std::endl;
+            std::cout << "discrete search failed" << std::endl;
+            //std::cout << current_position[0] << std::endl;
+            //std::cout << current_position[1] << std::endl;
+            //std::cout << current_position[2] << std::endl;
+            //std::cout << typeid(goal_position[0]).name() << std::endl;
+            //std::cout << goal_position[1] << std::endl;
+            //std::cout << goal_position[2] << std::endl;
+            //std::cout << time_horizon << std::endl;
             //std::cout << (m_collision_shape->boundingBox(current_position).center())[0] << std::endl;
             return std::nullopt;
         }
 
+        
         StdVectorVectorDIM discrete_path = std::move(*discrete_path_opt);
+        std::cout << "discrete path size: " << discrete_path.size() << std::endl;
+        std::cout << "first point in sol: " << discrete_path[0] << std::endl;  // current position
+        std::cout << "second point in sol: " << discrete_path[1] << std::endl; // final position correcto
 
         discrete_path = rlss::internal::firstSegmentFix<T, DIM>(discrete_path); // taken from discrete_path_opt
 
@@ -102,7 +91,12 @@ public:
         for(std::size_t i = 0; i < discrete_path.size() - 1; i++) {
             total_path_length
                     += (discrete_path[i+1] - discrete_path[i]).norm(); // norm refers to magnitude
+            std::cout << discrete_path[i] << std::endl;
+            std::cout << discrete_path[i+1] << std::endl;
+            std::cout << "total_path_length: " << i << " " << total_path_length << std::endl;
+        
         }
+
         time_horizon = std::max(
                 time_horizon,
                 total_path_length/m_maximum_velocity
@@ -126,17 +120,20 @@ public:
                           discrete_path.size());
         }
 
+        
         std::vector<T> segment_lengths(m_num_pieces); /// num_pieces = 4 for most of the time, need to test from here all the way to the bottom tmr
         total_path_length = 0;
         for(std::size_t i = 0; i + 1 < discrete_path.size(); i++) {
             segment_lengths[i]
                     = (discrete_path[i+1] - discrete_path[i]).norm();
+
+            std::cout << "segment_length: " << i << " " << segment_lengths[i] << std::endl;
             total_path_length
                     += segment_lengths[i];
         }
 
 
-        std::vector<T> segment_durations(m_num_pieces, 0);
+        std::vector<T> segment_durations(m_num_pieces, 0); // 4
         for(std::size_t i = 0; i < segment_lengths.size(); i++) {
             segment_durations[i]
                     = time_horizon * (segment_lengths[i] / total_path_length); // the fraction of the time horizon dedicated for each segment length
@@ -150,7 +147,24 @@ public:
             }
         }
 
+        /*std::cout << "new segment time: " << segment_durations.size() << std::endl;
+        std::cout << segment_durations[0] << std::endl;
+        std::cout << segment_durations[1] << std::endl;
+        std::cout << segment_durations[2] << std::endl;
+        std::cout << segment_durations[3] << std::endl;
+        
+
+        std::cout << "new discrete path: " << discrete_path.size() << std::endl;
+        std::cout << discrete_path[0] << std::endl;
+        std::cout << discrete_path[1] << std::endl;
+        std::cout << discrete_path[2] << std::endl;
+        std::cout << discrete_path[3] << std::endl;
+        std::cout << discrete_path[4] << std::endl;*/
+
+
+
         return std::make_pair(discrete_path, segment_durations); // figure a way to extract this 
+    
     };
 private:
     T m_safe_upto;

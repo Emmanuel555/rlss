@@ -20,6 +20,8 @@ std::vector<Hyperplane<T, DIM>> robot_safety_hyperplanes(
     using Hyperplane = internal::Hyperplane<T, DIM>;
     using AlignedBox = internal::AlignedBox<T, DIM>;
     using StdVectorVectorDIM = internal::StdVectorVectorDIM<T, DIM>;
+     
+    //std::cout << "hyper_plane check_1..." << std::endl;
 
     std::vector<Hyperplane> hyperplanes;
 
@@ -29,8 +31,16 @@ std::vector<Hyperplane<T, DIM>> robot_safety_hyperplanes(
     StdVectorVectorDIM robot_points
             = rlss::internal::cornerPoints<T, DIM>(robot_box);
 
+    //std::cout << "hyper_plane check_2..." << std::endl;
+
     for(const auto& oth_collision_shape_bbox:
             other_robot_collision_shape_bounding_boxes) {
+
+        std::cout << "hyper_plane for loop init..." << std::endl;
+        std::cout << "collision boxes center..." << (oth_collision_shape_bbox.center()) << std::endl;
+        std::cout << "collision boxes min..." << (oth_collision_shape_bbox.min()) << std::endl;
+        std::cout << "collision boxes max..." << (oth_collision_shape_bbox.max()) << std::endl;
+
         StdVectorVectorDIM oth_points
                 = rlss::internal::cornerPoints<T, DIM>(oth_collision_shape_bbox);
 
@@ -43,9 +53,10 @@ std::vector<Hyperplane<T, DIM>> robot_safety_hyperplanes(
                 robot_box,
                 svm_hp
         );
-
         hyperplanes.push_back(svm_shifted);
     }
+
+    //std::cout << "hyper_plane check..." << std::endl;
 
     return hyperplanes;
 }
@@ -97,7 +108,11 @@ void generate_optimization_problem(
         );
     }
 
+    //std::cout << "why isnt this triggered? " << current_robot_state.size() << std::endl;
+    //std::cout << "why isnt this triggered? " << contupto << std::endl;
+
     if(current_robot_state.size() <= contupto) {
+        std::cout << "robot_state_size_triggered " << std::endl;
         throw std::domain_error(
             absl::StrCat(
                 "robot state size does not contain some required derivatives",
@@ -109,7 +124,10 @@ void generate_optimization_problem(
         );
     }
 
+    //std::cout << "checkpoint_1..." << std::endl;
+
     if(thetas.size() != qpgen.numPieces()) {
+        std::cout << "no.of pieces_triggered " << std::endl;
         throw std::domain_error(
             absl::StrCat(
                "number of piece endpoint parameters is not equal to ",
@@ -122,6 +140,7 @@ void generate_optimization_problem(
         );
     }
 
+    //std::cout << "checkpoint_2..." << oth_rbt_col_shape_bboxes.size() << std::endl;
 
     for(const auto& bbox: oth_rbt_col_shape_bboxes) {
         debug_message(
@@ -134,10 +153,16 @@ void generate_optimization_problem(
         mathematica.otherRobotCollisionBox(bbox);
     }
 
+    //std::cout << "checkpoint_3..." << std::endl;
+
     qpgen.resetProblem();
     qpgen.setPieceMaxParameters(durations);
 
+    std::cout << "checkpoint_4..." << std::endl;
+
     mathematica.discretePath(segments);
+
+    std::cout << "checkpoint_5..." << std::endl;
 
     // workspace constraint
     AlignedBox ws = rlss::internal::bufferAlignedBox<T, DIM>(
@@ -145,7 +170,12 @@ void generate_optimization_problem(
             colshape->boundingBox(VectorDIM::Zero()),
             wss
     );
+
+    //std::cout << "checkpoint_6..." << std::endl;
+ 
     qpgen.addBoundingBoxConstraint(ws);
+
+    //std::cout << "checkpoint_7..." << std::endl;
 
     debug_message(
         "buffered workspace is [min: ",
@@ -155,11 +185,15 @@ void generate_optimization_problem(
         "]"
     );
 
+    //std::cout << "checkpoint_8..." << std::endl;
 
     mathematica.selfCollisionBox(
             colshape->boundingBox(current_robot_state[0]));
 
     // robot to robot avoidance constraints for the first piece - 1
+    
+    if (soft_parameters.at("robot_to_robot_hyperplane_constraints").first == 1)
+    {
     std::vector<Hyperplane> robot_to_robot_hps
             = robot_safety_hyperplanes<T, DIM>(
                     current_robot_state[0],
@@ -167,6 +201,8 @@ void generate_optimization_problem(
                     colshape
             );
 
+    std::cout << "checkpoint_10..." << std::endl;        
+    std::cout << "Hyperplane vector size..." << std::endl;
 //    robot_to_robot_hps = internal::pruneHyperplanes<T, DIM>(
 //            robot_to_robot_hps, ws);
 
@@ -206,6 +242,11 @@ void generate_optimization_problem(
             "]"
         );
     }
+
+    } // reject this hyperplane contraint for r2r for now
+
+
+    std::cout << "r2r condition cleared..." << std::endl;
 
 
     // robot to obstacle avoidance constraints for all pieces -2
