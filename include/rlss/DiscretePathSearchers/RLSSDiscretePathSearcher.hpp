@@ -55,6 +55,10 @@ public:
             const OccupancyGrid& occupancy_grid
     ) override {
 
+        std::cout << "time horizon_second..." << time_horizon << std::endl;
+        std::cout << "safe up to..." << m_safe_upto << std::endl;
+        std::cout << "max_vel..." << m_maximum_velocity << std::endl;
+
         time_horizon = std::max(time_horizon, m_safe_upto);
 
         std::optional<StdVectorVectorDIM> discrete_path_opt =
@@ -82,8 +86,8 @@ public:
         
         StdVectorVectorDIM discrete_path = std::move(*discrete_path_opt);
         std::cout << "discrete path size: " << discrete_path.size() << std::endl;
-        std::cout << "first point in sol: " << discrete_path[0] << std::endl;  // current position
-        std::cout << "second point in sol: " << discrete_path[1] << std::endl; // final position correcto
+        //std::cout << "first point in sol: " << discrete_path[0] << std::endl;  // current position
+        //std::cout << "second point in sol: " << discrete_path[1] << std::endl; // final position correcto
 
         discrete_path = rlss::internal::firstSegmentFix<T, DIM>(discrete_path); // taken from discrete_path_opt
 
@@ -91,9 +95,9 @@ public:
         for(std::size_t i = 0; i < discrete_path.size() - 1; i++) {
             total_path_length
                     += (discrete_path[i+1] - discrete_path[i]).norm(); // norm refers to magnitude
-            std::cout << discrete_path[i] << std::endl;
-            std::cout << discrete_path[i+1] << std::endl;
-            std::cout << "total_path_length: " << i << " " << total_path_length << std::endl;
+            //std::cout << discrete_path[i] << std::endl;
+            //std::cout << discrete_path[i+1] << std::endl;
+            //std::cout << "total_path_length: " << i << " " << total_path_length << std::endl;
         
         }
 
@@ -101,6 +105,8 @@ public:
                 time_horizon,
                 total_path_length/m_maximum_velocity
         );
+
+        std::cout << "time horizon..." << time_horizon << std::endl;
 
         debug_message("discrete path length returned from the solver is ",
                       discrete_path.size());
@@ -137,6 +143,7 @@ public:
         for(std::size_t i = 0; i < segment_lengths.size(); i++) {
             segment_durations[i]
                     = time_horizon * (segment_lengths[i] / total_path_length); // the fraction of the time horizon dedicated for each segment length
+            std::cout << segment_durations[i] << std::endl;
         }
 
         if(!segment_durations.empty() && segment_durations[0] < m_safe_upto) {

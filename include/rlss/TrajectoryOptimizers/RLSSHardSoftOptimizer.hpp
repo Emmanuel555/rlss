@@ -68,7 +68,7 @@ namespace rlss {
 
             try {
                 internal::generate_optimization_problem<T, DIM>(
-                        m_qp_generator,
+                        m_qp_generator, // append constraints to qpgen
                         m_collision_shape,
                         m_workspace,
                         m_continuity_upto,
@@ -89,24 +89,26 @@ namespace rlss {
             }
 
          
-            QPWrappers::RLSS_HARD_QP_SOLVER::Engine<T> solver;
-            solver.setFeasibilityTolerance(1e-9);
-            auto initial_guess = m_qp_generator.getDVarsForSegments(segments);
-            Vector soln;
+            QPWrappers::RLSS_HARD_QP_SOLVER::Engine<T> solver; // defined solver
+            solver.setFeasibilityTolerance(1e-9); // solver tolerance
+            auto initial_guess = m_qp_generator.getDVarsForSegments(segments); //initial guess wud be from a star
+            Vector soln; // initialise soln type
             QPWrappers::OptReturnType ret = QPWrappers::OptReturnType::Unknown;
 
             try {
                 ret = solver.next(
-                        m_qp_generator.getProblem(), soln, initial_guess);
+                        m_qp_generator.getProblem(), soln, initial_guess); // the segments r the initial guesses rmb!!!!!!
             } catch (...) {
-            std::cout << "generator problem failed..." << std::endl;
+            std::cout << "initial solution failed..." << std::endl;
             }
             debug_message("hard optimization return value: ", ret);
 
-            if(ret == QPWrappers::OptReturnType::Optimal) {
+            std::cout << ret << std::endl;
+            
+            if(ret == QPWrappers::OptReturnType::Optimal) { // hard optimisation soln worked
                 auto result = m_qp_generator.extractCurve(soln);
                 mathematica.piecewiseCurve(result);
-                std::cout << "optimal..." << std::endl;
+                std::cout << "optimal for first try..." << std::endl;
                 return result;
             } else {
                 std::cout << "non-optimal..." << std::endl;
@@ -128,7 +130,7 @@ namespace rlss {
                         = soft_solution.block(0, 0, initial_guess.rows(), 1);
                     auto result = m_qp_generator.extractCurve(soft_solution_primary);
                     mathematica.piecewiseCurve(result);
-                    std::cout << "optimal..." << std::endl;
+                    std::cout << "optimal second try with soft constraints..." << std::endl;
                     return result;
                 } else {
                     std::cout << "caught at the end..." << std::endl;

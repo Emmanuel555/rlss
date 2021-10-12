@@ -328,8 +328,8 @@ public:
         );
 
         debug_message("re-planning done.");
-        if(resulting_curve == std::nullopt)
-           //|| !m_validity_checker->isValid(*resulting_curve)) //need to work on this next...
+        if(resulting_curve == std::nullopt
+           || !m_validity_checker->isValid(*resulting_curve)) //need to work on this next...
            {
             debug_message(
                     internal::debug::colors::RED,

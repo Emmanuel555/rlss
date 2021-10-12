@@ -248,7 +248,13 @@ void generate_optimization_problem(
 
     std::cout << "r2r condition cleared..." << std::endl;
 
+    std::cout << "find r2o weights..." << soft_parameters.at("robot_to_obstacle_hyperplane_constraints").second << std::endl;
 
+    //std::cout << obstacle_check_distance << std::endl;
+
+    
+    if (soft_parameters.at("robot_to_obstacle_hyperplane_constraints").first == 1)
+    {
     // robot to obstacle avoidance constraints for all pieces -2
     for (
         std::size_t p_idx = 0;
@@ -328,6 +334,7 @@ void generate_optimization_problem(
             );
         }
     }
+    }
 
 
     // continuity constraints - 3
@@ -358,12 +365,12 @@ void generate_optimization_problem(
                 ? soft_parameters.at("continuity_constraints")
                         .second
                 : 0;
-            qpgen.addContinuityConstraint( // 3
+            /*qpgen.addContinuityConstraint( // 3
                 p_idx,
                 k,
                 continuity_constraints_soft_enabled,
                 continuity_constraints_soft_weight
-            );
+            );*/
         }
     }
 
@@ -388,13 +395,13 @@ void generate_optimization_problem(
                 ? soft_parameters.at("initial_point_constraints")
                         .second
                 : 0;
-        qpgen.addEvalConstraint( // 4
+        /*qpgen.addEvalConstraint( // 4
                 0,
                 k,
                 current_robot_state[k],
                 initial_point_constraints_soft_enabled,
                 initial_point_constraints_soft_weight
-        );
+        );*/
     }
 
 

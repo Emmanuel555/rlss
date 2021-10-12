@@ -46,7 +46,7 @@ public:
 //        );
 
         T target_time = std::min(
-                current_time + m_desired_horizon,
+                current_time + m_desired_horizon, // cannot assume we start from zero, clock waits for no man
                 m_original_trajectory.maxParameter()
         );
         VectorDIM target_position = m_original_trajectory.eval(target_time, 0); // null derivative value at target time (current time + horizon), max time it will reach will be its duration
@@ -132,7 +132,8 @@ public:
             return std::nullopt;
         }
 
-        T actual_horizon = target_time - current_time;
+        T actual_horizon = target_time - current_time; // ends up having negative horizon as max_parameter is a scalar whereas current time has direction
+        
         return std::make_pair(target_position, target_time); //horizon shud be 8s, and target position = m_original_trajectory.eval(current time + horizon, 0)
     }
 
