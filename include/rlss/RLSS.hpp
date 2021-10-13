@@ -169,7 +169,7 @@ public:
                 m_discrete_path_searcher->search( // goes into rlss discrete path searcher
                     current_robot_state[0], // where i currently am
                     goal_and_duration->first, //goal position
-                    goal_and_duration->second, // time horizon
+                    goal_and_duration->second, // actual horizon
                     occupancy_grid
         );
 
