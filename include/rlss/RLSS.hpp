@@ -167,7 +167,7 @@ public:
         std::optional<std::pair<StdVectorVectorDIM, std::vector<T>>>
                 segments_and_durations =
                 m_discrete_path_searcher->search( // goes into rlss discrete path searcher
-                    current_robot_state[0],
+                    current_robot_state[0], // where i currently am
                     goal_and_duration->first, //goal position
                     goal_and_duration->second, // time horizon
                     occupancy_grid
@@ -253,7 +253,7 @@ public:
             resulting_curve =
                     m_trajectory_optimizer->optimize( // returns a curve 
                             segments,
-                            durations,
+                            durations, // (1.31521,1.31521,1.31521,1.31521), after multiplier, this will back into the solver again until it passed the validity test..
                             other_robot_collision_shape_bounding_boxes,
                             occupancy_grid,
                             current_robot_state

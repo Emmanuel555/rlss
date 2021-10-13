@@ -21,7 +21,10 @@ public:
     }
 
     bool isValid(const PiecewiseCurve &curve) override {
+    
         for(const auto& [d, l]: m_max_derivative_magnitudes) {
+            //std::cout << "need to do stupid validity check 1..." << d << std::endl;
+            //std::cout << "need to do stupid validity check 2..." << l << std::endl;
             for(
                 T param = 0;
                 param < curve.maxParameter();
@@ -38,7 +41,8 @@ public:
                 std::cout << "l.." << l << std::endl;*/
 
                 if(norm > l) {
-                    /*std::cout << "error_Params..." << param << std::endl;
+                    /*std::cout << "time maxparam of curve..." << curve.maxParameter() << std::endl;
+                    std::cout << "error_Params..." << param << std::endl;
                     std::cout << "error_d value..." << d << std::endl;
                     std::cout << "error_Norm..." << norm << std::endl;
                     std::cout << "error_l.." << l << std::endl;*/

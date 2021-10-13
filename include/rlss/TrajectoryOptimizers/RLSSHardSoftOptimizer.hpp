@@ -103,7 +103,7 @@ namespace rlss {
             }
             debug_message("hard optimization return value: ", ret);
 
-            std::cout << ret << std::endl;
+            //std::cout << "results from solver..." << ret << std::endl;
             
             if(ret == QPWrappers::OptReturnType::Optimal) { // hard optimisation soln worked
                 auto result = m_qp_generator.extractCurve(soln);

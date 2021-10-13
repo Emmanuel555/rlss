@@ -133,7 +133,7 @@ public:
             segment_lengths[i]
                     = (discrete_path[i+1] - discrete_path[i]).norm();
 
-            std::cout << "segment_length: " << i << " " << segment_lengths[i] << std::endl;
+            //std::cout << "segment_length: " << i << " " << segment_lengths[i] << std::endl;
             total_path_length
                     += segment_lengths[i];
         }
@@ -143,7 +143,7 @@ public:
         for(std::size_t i = 0; i < segment_lengths.size(); i++) {
             segment_durations[i]
                     = time_horizon * (segment_lengths[i] / total_path_length); // the fraction of the time horizon dedicated for each segment length
-            std::cout << segment_durations[i] << std::endl;
+            //std::cout << segment_durations[i] << std::endl;
         }
 
         if(!segment_durations.empty() && segment_durations[0] < m_safe_upto) {

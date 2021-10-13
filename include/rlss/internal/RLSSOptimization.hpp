@@ -84,6 +84,7 @@ void generate_optimization_problem(
     using Hyperplane = internal::Hyperplane<T, DIM>;
     using StdVectorVectorDIM = internal::StdVectorVectorDIM<T, DIM>;
 
+
     if(segments.size() != qpgen.numPieces() + 1) {
         throw std::domain_error(
             absl::StrCat(
@@ -95,6 +96,7 @@ void generate_optimization_problem(
             )
         );
     }
+
 
     if(durations.size() + 1 != segments.size()) {
         throw std::domain_error(
@@ -108,8 +110,10 @@ void generate_optimization_problem(
         );
     }
 
+
     //std::cout << "why isnt this triggered? " << current_robot_state.size() << std::endl;
     //std::cout << "why isnt this triggered? " << contupto << std::endl;
+
 
     if(current_robot_state.size() <= contupto) {
         std::cout << "robot_state_size_triggered " << std::endl;
@@ -170,13 +174,9 @@ void generate_optimization_problem(
             colshape->boundingBox(VectorDIM::Zero()),
             wss
     );
-
-    //std::cout << "checkpoint_6..." << std::endl;
- 
+    
     qpgen.addBoundingBoxConstraint(ws);
-
-    //std::cout << "checkpoint_7..." << std::endl;
-
+    
     debug_message(
         "buffered workspace is [min: ",
         ws.min().transpose(),
@@ -185,11 +185,11 @@ void generate_optimization_problem(
         "]"
     );
 
-    //std::cout << "checkpoint_8..." << std::endl;
-
     mathematica.selfCollisionBox(
             colshape->boundingBox(current_robot_state[0]));
 
+    
+    
     // robot to robot avoidance constraints for the first piece - 1
     
     if (soft_parameters.at("robot_to_robot_hyperplane_constraints").first == 1)
@@ -248,7 +248,7 @@ void generate_optimization_problem(
 
     std::cout << "r2r condition cleared..." << std::endl;
 
-    std::cout << "find r2o weights..." << soft_parameters.at("robot_to_obstacle_hyperplane_constraints").second << std::endl;
+    //std::cout << "find r2o weights..." << soft_parameters.at("robot_to_obstacle_hyperplane_constraints").second << std::endl;
 
     //std::cout << obstacle_check_distance << std::endl;
 
@@ -406,7 +406,7 @@ void generate_optimization_problem(
 
 
 
-    // energy cost
+    // energy cost - 5
     for(const auto& [d, l]: lambdas) {
         debug_message("adding integrated squared derivative cost for",
             "degree ", d, " with lambda ", l
@@ -416,7 +416,7 @@ void generate_optimization_problem(
 
 
 
-    // eval cost taking into acc the above constraints
+    // eval cost taking into acc the above constraints - 6
     T duration_sum_before = 0;
     for(
         std::size_t p_idx = 0;
