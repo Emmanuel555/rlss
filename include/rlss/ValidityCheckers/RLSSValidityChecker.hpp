@@ -32,6 +32,10 @@ public:
             ) {
                 T norm = curve.eval(param, d).norm(); //curve.eval(time_param, derivative)
 
+                if (d == 1)
+                {
+                    std::cout << "Currently traversing at velocity " << norm << std::endl;
+                }
                 //std::cout << "time maxparam of curve..." << curve.maxParameter() << std::endl;
                 //std::cout << "euclidean distance from goal to origin at 1st derivative..." << (curve.eval(curve.maxParameter(),d)).norm() << std::endl;
                 //std::cout << "euclidean distance from goal to origin at position..." << (curve.eval(curve.maxParameter(),0)).norm() << std::endl;
