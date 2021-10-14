@@ -38,8 +38,8 @@ TEST_CASE("discrete search in 3D", "internal::DiscreteSearch") {
     //grid.setOccupancy(Index(5,1));
 
     OccupancyGrid grid3D(Coordinate(0.5, 0.5, 0.5)); // per grid size
-    grid3D.setOccupancy(Coordinate(0.034,0.045,-0.067));
-    //grid3D.setOccupancy(Index(1,4,0.5));
+    //grid3D.setOccupancy(Coordinate(0.034,0.045,-0.067));
+    grid3D.setOccupancy(Index(1,4,0.5));
     //grid3D.removeOccupancy(Coordinate(0.034,0.045,-0.067));
     /*grid3D.setOccupancy(Index(2,1,0.5));
     grid3D.setOccupancy(Index(3,2));
