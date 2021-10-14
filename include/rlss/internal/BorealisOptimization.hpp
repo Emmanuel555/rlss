@@ -1,5 +1,5 @@
-#ifndef BOREALIS_INTERNAL_BOREALIS_OPTIMIZATION_HPP
-#define BOREALIS_INTERNAL_BOREALIS_OPTIMIZATION_HPP
+#ifndef RLSS_INTERNAL_BOREALIS_OPTIMIZATION_HPP
+#define RLSS_INTERNAL_BOREALIS_OPTIMIZATION_HPP
 
 #include <rlss/CollisionShapes/CollisionShape.hpp>
 #include <splx/opt/PiecewiseCurveQPGenerator.hpp>
@@ -11,7 +11,7 @@ namespace rlss {
 namespace internal {
 
 template<typename T, unsigned int DIM>
-std::vector<Hyperplane<T, DIM>> robot_safety_hyperplanes(
+std::vector<Hyperplane<T, DIM>> robot_safety_hyperplanes_borealis( // naming etc. must be different including functions etc.
         const VectorDIM<T, DIM>& robot_position,
         const std::vector<AlignedBox<T, DIM>>&
         other_robot_collision_shape_bounding_boxes,
@@ -195,7 +195,7 @@ void generate_optimization_problem_borealis(
     if (soft_parameters.at("robot_to_robot_hyperplane_constraints").first == 1)
     {
     std::vector<Hyperplane> robot_to_robot_hps
-            = robot_safety_hyperplanes<T, DIM>(
+            = robot_safety_hyperplanes_borealis<T, DIM>(
                     current_robot_state[0],
                     oth_rbt_col_shape_bboxes,
                     colshape
@@ -440,4 +440,4 @@ void generate_optimization_problem_borealis(
 } // namespace internal
 } // namespace rlss
 
-#endif // RLSS_INTERNAL_RLSS_OPTIMIZATION_HPP
+#endif // RLSS_INTERNAL_BOREALIS_OPTIMIZATION_HPP

@@ -7,6 +7,7 @@
 #include <rlss/CollisionShapes/CollisionShape.hpp>
 #include <rlss/internal/SVM.hpp>
 #include <rlss/internal/MathematicaWriter.hpp>
+#include <rlss/internal/BorealisOptimization.hpp>
 #include <chrono>
 
 namespace rlss {
@@ -67,7 +68,7 @@ namespace rlss {
             internal::MathematicaWriter<T, DIM> mathematica;
 
             try {
-                internal::generate_optimization_problem<T, DIM>(
+                internal::generate_optimization_problem_borealis<T, DIM>( // changed it here...
                         m_qp_generator, // append constraints to qpgen
                         m_collision_shape,
                         m_workspace,
