@@ -134,7 +134,7 @@ public:
 
         T actual_horizon = target_time - current_time; // ends up having negative horizon as max_parameter is a scalar whereas current time has direction
         
-        return std::make_pair(target_position, target_time); //horizon shud be 8s, and target position = m_original_trajectory.eval(current time + horizon, 0)
+        return std::make_pair(target_position, actual_horizon); //horizon shud be 8s, and target position = m_original_trajectory.eval(current time + horizon, 0)
         // for now, use target_time, means at every point, the horizon would be increasing as the drone 
         // isnt moving in current time, all the way up to max.param of curve so effectively, it would be 
         // 5 seconds horizon at each point to the end until it reaches close enuff distance

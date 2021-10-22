@@ -152,7 +152,7 @@ public:
         std::cout << "goal x:" << "  " << goal_and_duration->first[0] << std::endl;
         std::cout << "goal y:" << "  " << goal_and_duration->first[1] << std::endl;
         std::cout << "goal z:" << "  " << goal_and_duration->first[2] << std::endl;
-        std::cout << "time taken to reach:" << "  " << goal_and_duration->second << std::endl;        
+        std::cout << "time taken to reach: " << "  " << goal_and_duration->second << std::endl;        
         
         debug_message("goal position: ", goal_and_duration->first.transpose());
         debug_message("actual time horizon: ", goal_and_duration->second);

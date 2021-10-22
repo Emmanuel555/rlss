@@ -103,6 +103,7 @@ public:
 
         time_horizon = std::max(
                 time_horizon,
+                //1.0
                 total_path_length/m_maximum_velocity
         );
 
