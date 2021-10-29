@@ -529,7 +529,7 @@ int main(int argc, char* argv[]) {
             old_position_state[i] = states[i][0];
             simulated_obstacle[i] = states[i][0];
             simulated_obstacle[i][0] += 3.0; // change to 0.5
-            simulated_obstacle[i][1] = 0.9; //(states[i][0][1] - 6.0);
+            simulated_obstacle[i][1] = -9.0; //(states[i][0][1] - 6.0);
         }
 
 
