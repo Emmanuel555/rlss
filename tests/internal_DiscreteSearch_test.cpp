@@ -39,7 +39,7 @@ TEST_CASE("discrete search in 3D", "internal::DiscreteSearch") {
 
     OccupancyGrid grid3D(Coordinate(0.5, 0.5, 0.5)); // per grid size
     //grid3D.setOccupancy(Coordinate(0.034,0.045,-0.067));
-    grid3D.setOccupancy(Index(1,4,0.5));
+    //grid3D.setOccupancy(Index(1,4,0.5));
     //grid3D.removeOccupancy(Coordinate(0.034,0.045,-0.067));
     /*grid3D.setOccupancy(Index(2,1,0.5));
     grid3D.setOccupancy(Index(3,2));
@@ -59,10 +59,10 @@ TEST_CASE("discrete search in 3D", "internal::DiscreteSearch") {
     //Coordinate start_position(0.74,0.75,0.0);
     //Coordinate goal_position(3.76,3.75,0.0);
 
-    auto al_collision_shape = make_shared<AlignedBoxCollisionShape>(AlignedBox(VectorDIM3(-0.1, -0.1, 0.0), VectorDIM3(1.0, 1.0, 1.0))); // add in the 3D to do* 
+    auto al_collision_shape = make_shared<AlignedBoxCollisionShape>(AlignedBox(VectorDIM3(-0.6, -0.6, 0.0), VectorDIM3(0.6, 0.6, 0.25))); // add in the 3D to do* 
     auto collision_shape = static_pointer_cast<CollisionShape>(al_collision_shape);
-    Coordinate start_position(0.034,0.045,-0.067); // starting coordinate has to ensure that space is accounted for the collision shapes
-    Coordinate goal_position(9.0,0.0,1.5);
+    Coordinate start_position(0.0,0.0,2.2); // starting coordinate has to ensure that space is accounted for the collision shapes
+    Coordinate goal_position(5.0,0.0,1.5);
 
     //AlignedBox workspace(VectorDIM(0, 0, 0), VectorDIM(4.5, 4.5, 4.5));
     AlignedBox workspace(VectorDIM3(-50, -50, -1), VectorDIM3(50.0, 50.0, 50.0));
@@ -79,11 +79,11 @@ TEST_CASE("discrete search in 3D", "internal::DiscreteSearch") {
     //std::cout << TestVector(1.0,1.0) << std::endl;
     StdVectorVectorDIM result_vector = *result;
     cout << result_vector.size() << endl;
-    std::cout << "it should be occupied right?" << "  " << grid3D.isOccupied(Index(0.034,0.045,-0.067)) << std::endl;
-    std::cout << "it should be occupied right?" << "  " << grid3D.isOccupied(Index(1,4,0.5)) << std::endl;
+    //std::cout << "it should be occupied right?" << "  " << grid3D.isOccupied(Index(0.034,0.045,-0.067)) << std::endl;
+    //std::cout << "it should be occupied right?" << "  " << grid3D.isOccupied(Index(1,4,0.5)) << std::endl;
     //grid3D.removeOccupancy(Index(1,5,0.5));
     //std::cout << grid3D.isOccupied(Index(1,5,0.5)) << std::endl;
-    std::cout << workspace.contains(start_position) << std::endl;
+    cout << workspace.contains(start_position) << std::endl;
     //cout << grid3D.getCenter(Index(1.0,1.0)) << endl;
     //cout << grid3D.getIndex(Coordinate(0.3,4.0,0.5)) << endl;
     //cout << VectorDIM3(0.1, 0.1, 0.1) << endl;
@@ -103,6 +103,7 @@ TEST_CASE("discrete search in 3D", "internal::DiscreteSearch") {
 
     result_vector = rlss::internal::firstSegmentFix<double, DIM3>(result_vector);
     cout << result_vector[0].norm() << endl;
+    cout << result_vector[0] << endl;
     cout << result_vector[1] << endl;
     cout << result_vector[2] << endl;
 

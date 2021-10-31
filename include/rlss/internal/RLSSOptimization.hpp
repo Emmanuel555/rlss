@@ -365,12 +365,12 @@ void generate_optimization_problem(
                 ? soft_parameters.at("continuity_constraints")
                         .second
                 : 0;
-            /*qpgen.addContinuityConstraint( // 3
+            qpgen.addContinuityConstraint( // 3
                 p_idx,
                 k,
                 continuity_constraints_soft_enabled,
                 continuity_constraints_soft_weight
-            );*/
+            );
         }
     }
 
@@ -395,13 +395,13 @@ void generate_optimization_problem(
                 ? soft_parameters.at("initial_point_constraints")
                         .second
                 : 0;
-        /*qpgen.addEvalConstraint( // 4
+        qpgen.addEvalConstraint( // 4
                 0,
                 k,
                 current_robot_state[k],
                 initial_point_constraints_soft_enabled,
                 initial_point_constraints_soft_weight
-        );*/
+        );
     }
 
 
