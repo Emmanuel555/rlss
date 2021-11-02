@@ -17,8 +17,8 @@ TEST_CASE("OccupancyGrid.getIndex() test", "OccupancyGrid") {
     std::cout << idx[0] << std::endl;
     REQUIRE(idx == Index(-2, 0));
 
-    idx = grid.getIndex(Coordinate(0.5, 0.4));
-    REQUIRE(idx == Index(1, 1));
+    idx = grid.getIndex(Coordinate(1.0, 0.8));
+    REQUIRE(idx == Index(2, 2));
 
     idx = grid.getIndex(Coordinate(-0.5, -0.3));
     REQUIRE(idx == Index(-2, -1));

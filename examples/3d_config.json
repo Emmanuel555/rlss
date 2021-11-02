@@ -1,6 +1,6 @@
 {
     "base_path": "/home/emmanuel/rlss_ws/src/rlss_ros/third_party/rlss/",
-    "obstacle_directory": "examples/inputs/obstacle_descriptions/3d/new_obs/",
+    "obstacle_directory": "examples/inputs/obstacle_descriptions/3d/borealis_demo_1/",
     "robot_parameters_directory": "examples/inputs/demo_descriptions/3d/borealis_demo/",
     "replanning_period": 0.1,
     "reach_distance": 0.5, 
@@ -26,8 +26,8 @@
         ]
     },
     "workspace": [
-        [-10, -10, 0],
-        [10, 10, 10]
+        [-5, -7, -1],
+        [7, 2, 5]
     ],
     "maximum_derivative_magnitudes": [
         [1, 3],
@@ -47,7 +47,7 @@
             "weight": 10000
         },
         "robot_to_obstacle_hyperplane_constraints": {
-            "enable": false,
+            "enable": true,
             "weight": 1000000
         },
         "initial_point_constraints": {

@@ -171,7 +171,7 @@ int main(int argc, char* argv[]) {
 
         }
     }
-
+    
     //std::cout << "num obstacles: " << occupancy_grid.size() << std::endl;
     //std::cout << 
 
@@ -536,7 +536,8 @@ int main(int argc, char* argv[]) {
         // generate additional stuff to add onto the occupancy grid that is dynamic
                 
         // std::cout << "no of neighbours of drone 1: " << occupancy_grid.getNeighbors((old_position_state[1])).size() << std::endl;
-        occupancy_grid.setOccupancy(occupancy_grid.getNeighbors((simulated_obstacle[0]))[0]);
+        
+        //occupancy_grid.setOccupancy(occupancy_grid.getNeighbors((simulated_obstacle[0]))[0]); //used to be dynamic obstacle inserted
         json_builder.addOccupancyGridToCurrentFrame(occupancy_grid);
         std::cout << "num obstacles: " << occupancy_grid.size() << std::endl;
         std::cout << "\n" << std::endl; 

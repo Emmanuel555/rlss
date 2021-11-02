@@ -3,10 +3,10 @@
     "pieces": [
       {
         "type": "BEZIER",
-        "duration": 1.0,
+        "duration": 1.7,
         "control_points": [
-          [-3.0, -2.0, 1.5],
-          [-2.0, -2.0, 1.5]
+          [0.0, 0.0, 1.5],
+          [4.0, -5.0, 1.5]
         ]
       }
     ]
@@ -55,7 +55,7 @@
     [10, 10]
   ],
   "optimization_obstacle_check_distance": 0.5,
-  "optimizer": "rlss-hard",
+  "optimizer": "rlss-soft-hard",
   "soft_optimization_parameters": {
     "robot_to_robot_hyperplane_constraints": {
       "enable": false,

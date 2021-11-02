@@ -3,10 +3,10 @@
     "pieces": [
       {
         "type": "BEZIER",
-        "duration": 1.75,
+        "duration": 12.8,
         "control_points": [
           [0.0, 0.0, 1.5],
-          [5.0, 0.0, 1.5]
+          [4.0, -5.0, 1.5]
         ]
       }
     ]
@@ -62,7 +62,7 @@
       "weight": 10000
     },
     "robot_to_obstacle_hyperplane_constraints": {
-      "enable": false,
+      "enable": true,
       "weight": 10000
     },
     "initial_point_constraints": {
