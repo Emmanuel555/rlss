@@ -3,7 +3,7 @@
     "pieces": [
       {
         "type": "BEZIER",
-        "duration": 15,
+        "duration": 10,
         "control_points": [
           [-6.0087, 3.11773, 1.0250584],
           [3.53392, 3.1173, 1.0504614]

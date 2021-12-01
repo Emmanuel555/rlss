@@ -98,7 +98,7 @@ int main(int argc, char* argv[]) {
                                     absl::StrCat(
                                             "../examples/",
                                             DIM,
-                                            "d_config.json"
+                                            "d_config_borealis.json" // there are 2 3d config.json files
                                     )
                             )
             )
