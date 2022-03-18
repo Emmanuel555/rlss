@@ -252,10 +252,11 @@ void generate_optimization_problem(
 
     //std::cout << obstacle_check_distance << std::endl;
 
-    
+
+
+    // robot to obstacle avoidance constraints for all pieces -2
     if (soft_parameters.at("robot_to_obstacle_hyperplane_constraints").first == 1)
     {
-    // robot to obstacle avoidance constraints for all pieces -2
     for (
         std::size_t p_idx = 0;
         p_idx < qpgen.numPieces();
