@@ -77,7 +77,7 @@ TEST_CASE("discrete search in 3D", "internal::DiscreteSearch") {
 
     //REQUIRE(result != std::nullopt);
     //std::cout << TestVector(1.0,1.0) << std::endl;
-    StdVectorVectorDIM result_vector = *result;
+    StdVectorVectorDIM result_vector = *result; 
     cout << result_vector.size() << endl;
     //std::cout << "it should be occupied right?" << "  " << grid3D.isOccupied(Index(0.034,0.045,-0.067)) << std::endl;
     //std::cout << "it should be occupied right?" << "  " << grid3D.isOccupied(Index(1,4,0.5)) << std::endl;

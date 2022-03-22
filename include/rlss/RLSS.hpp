@@ -158,6 +158,8 @@ public:
         debug_message("actual time horizon: ", goal_and_duration->second);
 
 
+
+
         debug_message("discreteSearch...");
 
         auto discrete_search_start_time = std::chrono::steady_clock::now();
@@ -231,6 +233,8 @@ public:
             );
         }
 
+        
+        
         /*std::cout << "new segment time: " << durations.size() << std::endl;
         std::cout << durations[0] << std::endl;
         std::cout << durations[1] << std::endl;

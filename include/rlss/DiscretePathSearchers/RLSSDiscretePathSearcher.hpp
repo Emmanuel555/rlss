@@ -51,7 +51,7 @@ public:
     search(
             const VectorDIM& current_position,
             const VectorDIM& goal_position,
-            T time_horizon, // probably taken from desired time horizon in RLSS::planner
+            T time_horizon, // horizon taken from RLSS.hpp which is the supposed time needed/allowed to reach the location 
             const OccupancyGrid& occupancy_grid
     ) override {
 
@@ -85,23 +85,26 @@ public:
 
         
         StdVectorVectorDIM discrete_path = std::move(*discrete_path_opt);
-        std::cout << "discrete path size: " << discrete_path.size() << std::endl;
-        //std::cout << "first point in sol: " << discrete_path[0] << std::endl;  // current position
-        //std::cout << "second point in sol: " << discrete_path[1] << std::endl; // final position correcto
+        std::cout << "discrete path size: " << discrete_path.size() << std::endl; 
+       
+        /* std::cout << "first point in sol: " << discrete_path[0] << std::endl;  // current position
+        std::cout << "second point in sol: " << discrete_path[1] << std::endl; // final position correcto
+        */
 
         discrete_path = rlss::internal::firstSegmentFix<T, DIM>(discrete_path); // taken from discrete_path_opt
 
         T total_path_length = 0;
         for(std::size_t i = 0; i < discrete_path.size() - 1; i++) {
             total_path_length
-                    += (discrete_path[i+1] - discrete_path[i]).norm(); // norm refers to magnitude
+                    += (discrete_path[i+1] - discrete_path[i]).norm(); // norm refers to magnitude, further the dist larger the norm..
+            
             //std::cout << discrete_path[i] << std::endl;
             //std::cout << discrete_path[i+1] << std::endl;
             //std::cout << "total_path_length: " << i << " " << total_path_length << std::endl;
         
         }
 
-        time_horizon = std::max(
+        time_horizon = std::max( // time horizon always favours giving more time should the planning be stuck..
                 time_horizon,
                 //1.0
                 total_path_length/m_maximum_velocity
