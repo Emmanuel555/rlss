@@ -235,7 +235,7 @@ int main(int argc, char* argv[]) {
 
         for(const nlohmann::json& plan_for_piece: pieces_json) {
             if(plan_for_piece["type"] == "BEZIER") {
-                qp_generator.addBezier(plan_for_piece["num_control_points"], 0); // [8,0]
+                qp_generator.addBezier(plan_for_piece["num_control_points"], 0); // [8,0], only bezier is added 4 times where each is 8 ctrl pts
             } else {
                 throw std::domain_error (
                         absl::StrCat(
@@ -385,7 +385,7 @@ int main(int argc, char* argv[]) {
                                 workspace,
                                 collision_shape,
                                 maximum_velocity, // should max_vel be minimally greater than the required vel (eucl distance/duration)?
-                                qp_generator.numPieces()
+                                qp_generator.numPieces() // 4
                         );
         auto discrete_path_searcher
                 = std::static_pointer_cast<DiscretePathSearcher>(
