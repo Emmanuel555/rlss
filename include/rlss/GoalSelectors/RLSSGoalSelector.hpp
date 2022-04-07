@@ -28,7 +28,7 @@ public:
         m_original_trajectory(origtraj),
         m_workspace(ws),
         m_collision_shape(colsha),
-        m_search_step(search_step)
+        m_search_step(search_step) /* time allocated for searching to occur */
     {}
 
     std::optional<std::pair<VectorDIM, T>> select
