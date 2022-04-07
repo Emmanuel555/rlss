@@ -406,6 +406,9 @@ void generate_optimization_problem_borealis(
 
 
 
+    // Obj Function Equation Var Below:
+
+    //
     // energy cost - 5
     for(const auto& [d, l]: lambdas) {
         debug_message("adding integrated squared derivative cost for",
