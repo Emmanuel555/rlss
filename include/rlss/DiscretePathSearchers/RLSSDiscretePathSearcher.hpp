@@ -56,8 +56,8 @@ public:
     ) override {
 
         std::cout << "time horizon_second..." << time_horizon << std::endl;
-        std::cout << "safe up to..." << m_safe_upto << std::endl;
-        std::cout << "max_vel..." << m_maximum_velocity << std::endl;
+        //std::cout << "safe up to..." << m_safe_upto << std::endl;
+        //std::cout << "max_vel..." << m_maximum_velocity << std::endl;
 
         time_horizon = std::max(time_horizon, m_safe_upto);
 
@@ -110,7 +110,7 @@ public:
                 total_path_length/m_maximum_velocity
         );
 
-        std::cout << "time horizon..." << time_horizon << std::endl;
+        //std::cout << "time horizon..." << time_horizon << std::endl;
 
         debug_message("discrete path length returned from the solver is ",
                       discrete_path.size());

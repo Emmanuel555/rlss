@@ -68,7 +68,7 @@ namespace rlss {
             internal::MathematicaWriter<T, DIM> mathematica;
 
             try {
-                internal::generate_optimization_problem<T, DIM>( // changed it here...
+                internal::generate_optimization_problem_borealis<T, DIM>( // changed it here...
                         m_qp_generator, // append constraints to qpgen
                         m_collision_shape,
                         m_workspace,
@@ -82,7 +82,7 @@ namespace rlss {
                         occupancy_grid,
                         current_robot_state,
                         mathematica,
-                        m_soft_parameters
+                        m_soft_parameters 
                 );
             } catch(...) {
                 std::cout << "Caught here..." << std::endl;

@@ -146,13 +146,13 @@ public:
             );
         }
 
-        std::cout << "current robot pos_x" << current_robot_state[0][0] << std::endl;
-        std::cout << "current robot pos_y" << current_robot_state[0][1] << std::endl;
-        std::cout << "current robot pos_z" << current_robot_state[0][2] << std::endl;
-        std::cout << "goal x:" << "  " << goal_and_duration->first[0] << std::endl;
-        std::cout << "goal y:" << "  " << goal_and_duration->first[1] << std::endl;
-        std::cout << "goal z:" << "  " << goal_and_duration->first[2] << std::endl;
-        std::cout << "time taken to reach: " << "  " << goal_and_duration->second << std::endl;        
+        std::cout << "current robot pos_x " << current_robot_state[0][0] << std::endl;
+        std::cout << "current robot pos_y " << current_robot_state[0][1] << std::endl;
+        std::cout << "current robot pos_z " << current_robot_state[0][2] << std::endl;
+        std::cout << "goal x: " << goal_and_duration->first[0] << std::endl;
+        std::cout << "goal y: " << goal_and_duration->first[1] << std::endl;
+        std::cout << "goal z: " << goal_and_duration->first[2] << std::endl;
+        std::cout << "time taken to reach: " << goal_and_duration->second << std::endl;        
         
         debug_message("goal position: ", goal_and_duration->first.transpose());
         debug_message("actual time horizon: ", goal_and_duration->second);
@@ -164,11 +164,11 @@ public:
 
         auto discrete_search_start_time = std::chrono::steady_clock::now();
     
-        std::cout << "Occupied before sending it into discrete search?" << "  " << occupancy_grid.isOccupied(current_robot_state[0]) << std::endl;
+        std::cout << "Occupied before sending it into discrete search? " << "  " << occupancy_grid.isOccupied(current_robot_state[0]) << std::endl;
         
-        std::optional<std::pair<StdVectorVectorDIM, std::vector<T>>>
+        std::optional<std::pair<StdVectorVectorDIM, std::vector<T>>> // returns a pair 
                 segments_and_durations =
-                m_discrete_path_searcher->search( // goes into rlss discrete path searcher
+                m_discrete_path_searcher->search( // search constructor from rlss discrete path searcher
                     current_robot_state[0], // where i currently am
                     goal_and_duration->first, //goal position
                     goal_and_duration->second, // actual horizon
@@ -195,8 +195,8 @@ public:
             sf_statistics.setDiscreteSearchSuccessFail(false);
             return std::nullopt;
         } else {
-            std::cout << segments_and_durations->first.size() << std::endl;
-            std::cout << segments_and_durations->second.size() << std::endl;
+            //std::cout << segments_and_durations->first.size() << std::endl; // 5 segments as defined in config
+            //std::cout << segments_and_durations->second.size() << std::endl; // 4 durations split amongst 5 segs as defined in config (8,8,8,8)
             //std::cout << segments_and_durations->first[0][1] << "  " << segments_and_durations->first[1][1] << "  " << segments_and_durations->first[4][1] << std::endl;
             std::cout << "made it aft discrete search" << std::endl;
             debug_message(
@@ -273,7 +273,7 @@ public:
             );
 
             if(resulting_curve == std::nullopt) {
-                std::cout << "fker failed" << std::endl;
+                std::cout << "curve failed" << std::endl;
                 debug_message(
                         internal::debug::colors::RED,
                         "trajectoryOptimization failed.",

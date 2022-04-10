@@ -2,7 +2,7 @@
     "base_path": "/home/emmanuel/rlss_ws/src/rlss_ros/third_party/rlss/",
     "obstacle_directory": "examples/inputs/obstacle_descriptions/3d/tight_channel/",
     "robot_parameters_directory": "examples/inputs/demo_descriptions/3d/tight_channel",
-    "replanning_period": 0.1,
+    "replanning_period": 1.0,
     "reach_distance": 0.5, 
     "occupancy_grid_step_size": [0.15, 0.15, 0.15],
     "plan_for_trajectory": {
@@ -43,7 +43,7 @@
     "optimizer": "rlss-hard-soft",
     "soft_optimization_parameters": {
         "robot_to_robot_hyperplane_constraints": {
-            "enable": false, 
+            "enable": true, 
             "weight": 10000
         },
         "robot_to_obstacle_hyperplane_constraints": {
@@ -55,7 +55,7 @@
             "weight": 100000
         },
         "continuity_constraints": {
-            "enable": true,
+            "enable": false,
             "weight": 1000
         }
     },

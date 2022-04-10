@@ -162,11 +162,11 @@ void generate_optimization_problem_borealis(
     qpgen.resetProblem();
     qpgen.setPieceMaxParameters(durations);
 
-    std::cout << "checkpoint_4..." << std::endl;
+    //std::cout << "checkpoint_4..." << std::endl;
 
     mathematica.discretePath(segments);
 
-    std::cout << "checkpoint_5..." << std::endl;
+    //std::cout << "checkpoint_5..." << std::endl;
 
     // workspace constraint
     AlignedBox ws = rlss::internal::bufferAlignedBox<T, DIM>(
@@ -175,7 +175,7 @@ void generate_optimization_problem_borealis(
             wss
     );
     
-    qpgen.addBoundingBoxConstraint(ws);
+    qpgen.addBoundingBoxConstraint(ws); //workspace
     
     debug_message(
         "buffered workspace is [min: ",
@@ -201,10 +201,9 @@ void generate_optimization_problem_borealis(
                     colshape
             );
 
-    std::cout << "checkpoint_10..." << std::endl;        
-    std::cout << "Hyperplane vector size..." << std::endl;
-//    robot_to_robot_hps = internal::pruneHyperplanes<T, DIM>(
-//            robot_to_robot_hps, ws);
+        
+    //    robot_to_robot_hps = internal::pruneHyperplanes<T, DIM>(
+    //    robot_to_robot_hps, ws);
 
     for(const auto& hp: robot_to_robot_hps) { //vector containing hyperplanes
         bool r2r_hyperplane_constraints_soft_enabled 
@@ -215,12 +214,16 @@ void generate_optimization_problem_borealis(
                 r2r_hyperplane_constraints_soft_enabled
                 ? soft_parameters.at("robot_to_robot_hyperplane_constraints").second // weight : 10000
                 : 0;
+
         qpgen.addHyperplaneConstraintForPiece( // 1
                 0,
                 hp,
                 r2r_hyperplane_constraints_soft_enabled,
                 r2r_hyperplane_constraints_soft_weight
         );
+
+        std::cout << "r2r hyperplane constraints enabled? " << r2r_hyperplane_constraints_soft_enabled << std::endl;
+        
         if(hp.signedDistance(current_robot_state[0]) > 0) {
             debug_message(
                 "distance of current point to a first piece hyperplane: ",
@@ -243,14 +246,16 @@ void generate_optimization_problem_borealis(
         );
     }
 
+    std::cout << "r2r condition cleared..." << std::endl;
+
     } // reject this hyperplane contraint for r2r for now
 
 
-    std::cout << "r2r condition cleared..." << std::endl;
+    
 
     //std::cout << "find r2o weights..." << soft_parameters.at("robot_to_obstacle_hyperplane_constraints").second << std::endl;
-
     //std::cout << obstacle_check_distance << std::endl;
+
 
     
     if (soft_parameters.at("robot_to_obstacle_hyperplane_constraints").first == 1)
@@ -326,6 +331,9 @@ void generate_optimization_problem_borealis(
                 ? soft_parameters.at("robot_to_obstacle_hyperplane_constraints")
                             .second
                 : 0;
+
+            std::cout << "r2o hyperplane constraints enabled? " << r2o_hyperplane_constraints_soft_enabled << std::endl;
+
             qpgen.addHyperplaneConstraintForPiece( // 2
                     p_idx,
                     shp,
@@ -334,6 +342,9 @@ void generate_optimization_problem_borealis(
             );
         }
     }
+
+    std::cout << "r2o condition cleared..." << std::endl;
+
     }
 
 
