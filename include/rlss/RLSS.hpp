@@ -69,7 +69,7 @@ public:
         debug_message("planning...");
 
         for(std::size_t i = 0; i < current_robot_state.size(); i++) {
-            //std::cout << "fking hell_2" << std::endl;
+            
             debug_message(
                     "current robot state at degree ",
                     i,
@@ -89,9 +89,9 @@ public:
         }
         
         for(const auto& colbox: other_robot_collision_shape_bounding_boxes) {
-            //std::cout << "fking hell_4" << std::endl;
+            
             occupancy_grid.addTemporaryObstacle(colbox);
-            //std::cout << "fking hell_5" << std::endl;
+           
         }
 
         debug_message("current position is ",
@@ -101,7 +101,6 @@ public:
         debug_message("goalSelection...");
 
 
-        //std::cout << "fking hell_6" << std::endl;
         //std::cout << current_time << std::endl;
 
         auto goal_selector_start_time = std::chrono::steady_clock::now();
@@ -113,7 +112,6 @@ public:
                 );
 
         //std::cout << current_time << std::endl;
-        //std::cout << "fking hell_3" << std::endl;
         //std::cout << goal_and_duration->first[0] << std::endl;
         //std::cout << goal_and_duration->second << std::endl;        
 

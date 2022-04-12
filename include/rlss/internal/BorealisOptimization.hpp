@@ -69,7 +69,7 @@ void generate_optimization_problem_borealis(
     unsigned int contupto,
     const std::vector<std::pair<unsigned int, T>>& lambdas,
     const std::vector<T>& thetas,
-    T obstacle_check_distance,
+    T obstacle_check_distance, //potential to increase this...
     const StdVectorVectorDIM<T, DIM>& segments,
     const std::vector<T>& durations,
     const std::vector<AlignedBox<T, DIM>>& oth_rbt_col_shape_bboxes,
