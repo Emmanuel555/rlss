@@ -587,10 +587,11 @@ int main(int argc, char* argv[]) {
                 }
 //                std::cout << "robot " << i << " eval" << std::endl;
                 states[i][j] = trajectories[i].eval( // this is the position it needs to actually go to
-                        std::min(
-                                trajectory_current_times[i] + replanning_period,   // updated position after replanning period, only goes to 0.1s on the curve before replanning again, for planning of next curve only thats why u dun see the robot json updater
-                                trajectories[i].maxParameter()
-                        ),
+                        1.0,
+                        //std::min(
+                        //        trajectory_current_times[i] + replanning_period,   // updated position after replanning period, only goes to 0.1s on the curve before replanning again, for planning of next curve only thats why u dun see the robot json updater
+                        //        trajectories[i].maxParameter()
+                        //),
                         j
                 );
 
