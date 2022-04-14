@@ -49,7 +49,7 @@ public:
                 current_time + m_desired_horizon, // cannot assume we start from zero, clock waits for no man
                 m_original_trajectory.maxParameter()
         );
-        VectorDIM target_position = m_original_trajectory.eval(target_time, 0); // null derivative value at target time (current time + horizon), max time it will reach will be its duration
+        VectorDIM target_position = m_original_trajectory.eval(target_time, 0); // null derivative value (position) at target time (current time + horizon), max time it will reach will be its duration
         bool target_time_valid = false;
         std::vector<Index> neighbors = occupancy_grid.getNeighbors(
                 target_position

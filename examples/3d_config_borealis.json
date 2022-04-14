@@ -26,20 +26,20 @@
         ]
     },
     "workspace": [
-        [-10, -10, -1],
-        [10, 10, 5]
+        [-20, -20, -1],
+        [20, 20, 5]
     ],
     "maximum_derivative_magnitudes": [
         [1, 3],
         [2, 4]
     ],
     "max_rescaling_count": 5,
-    "continuity_upto_degree": 5, 
+    "continuity_upto_degree": 7, 
     "collision_shape_at_zero": [  
         [-0.3, -0.3, 0.0], 
         [0.3, 0.3, 0.4]
     ],
-    "optimization_obstacle_check_distance": 1.0,
+    "optimization_obstacle_check_distance": 0.5,
     "optimizer": "rlss-hard-soft",
     "soft_optimization_parameters": {
         "robot_to_robot_hyperplane_constraints": {

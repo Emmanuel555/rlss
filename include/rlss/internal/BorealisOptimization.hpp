@@ -36,10 +36,10 @@ std::vector<Hyperplane<T, DIM>> robot_safety_hyperplanes_borealis( // naming etc
     for(const auto& oth_collision_shape_bbox:
             other_robot_collision_shape_bounding_boxes) {
 
-        std::cout << "hyper_plane for loop init..." << std::endl;
-        std::cout << "collision boxes center..." << (oth_collision_shape_bbox.center()) << std::endl;
-        std::cout << "collision boxes min..." << (oth_collision_shape_bbox.min()) << std::endl;
-        std::cout << "collision boxes max..." << (oth_collision_shape_bbox.max()) << std::endl;
+        //std::cout << "hyper_plane for loop init..." << std::endl;
+        //std::cout << "collision boxes center..." << (oth_collision_shape_bbox.center()) << std::endl;
+        //std::cout << "collision boxes min..." << (oth_collision_shape_bbox.min()) << std::endl;
+        //std::cout << "collision boxes max..." << (oth_collision_shape_bbox.max()) << std::endl;
 
         StdVectorVectorDIM oth_points
                 = rlss::internal::cornerPoints<T, DIM>(oth_collision_shape_bbox);
@@ -332,7 +332,7 @@ void generate_optimization_problem_borealis(
                             .second
                 : 0;
 
-            std::cout << "r2o hyperplane constraints enabled? " << r2o_hyperplane_constraints_soft_enabled << std::endl;
+            //std::cout << "r2o hyperplane constraints enabled? " << r2o_hyperplane_constraints_soft_enabled << std::endl;
 
             qpgen.addHyperplaneConstraintForPiece( // 2
                     p_idx,
@@ -376,12 +376,12 @@ void generate_optimization_problem_borealis(
                 ? soft_parameters.at("continuity_constraints")
                         .second
                 : 0;
-            /*qpgen.addContinuityConstraint( // 3
+            qpgen.addContinuityConstraint( // 3
                 p_idx,
                 k,
                 continuity_constraints_soft_enabled,
                 continuity_constraints_soft_weight
-            );*/
+            );
         }
     }
 
