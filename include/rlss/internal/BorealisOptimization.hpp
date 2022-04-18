@@ -317,7 +317,9 @@ void generate_optimization_problem_borealis(
         debug_message("after prune num hyperplanes: "
                 , piece_obstacle_hyperplanes.size());
 
-        for(const auto& shp: piece_obstacle_hyperplanes) {
+        std::cout << "no of pc obs hyperplanes..." << piece_obstacle_hyperplanes.size() << std::endl;
+
+        for(const auto& shp: piece_obstacle_hyperplanes) { //for every hyperplane induced
             bool r2o_hyperplane_constraints_soft_enabled
                 = soft_parameters.find(
                         "robot_to_obstacle_hyperplane_constraints"
