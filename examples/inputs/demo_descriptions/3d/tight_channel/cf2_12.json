@@ -5,8 +5,8 @@
         "type": "BEZIER",
         "duration": 5.0,
         "control_points": [
-          [0.0, 1.0, 1.5],
-          [5.0, 1.0, 1.5]
+          [0.0, 2.0, 1.5],
+          [-2.0, 1.0, 1.5]
         ]
       }
     ]
@@ -41,11 +41,11 @@
     [2, 4]
   ],
   "integrated_squared_derivative_weights": [
-    [1, 0.8],
-    [2, 0.8],
-    [4, 0.1]
+    [1, 0.5],
+    [2, 0.5],
+    [4, 0.5]
   ],
-  "piece_endpoint_cost_weights": [0.5, 0.5, 0.5, 0.5],
+  "piece_endpoint_cost_weights": [1, 1, 1, 1],
   "collision_shape_at_zero": [
     [-0.15, -0.15],
     [0.15, 0.15]

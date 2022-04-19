@@ -112,7 +112,7 @@ namespace rlss {
                 std::cout << "optimal for first try..." << std::endl;
                 return result;
             } else {
-                std::cout << "non-optimal..." << std::endl;
+                std::cout << "non-optimal..." << std::endl; // need to convert to soft problem
                 auto soft_problem = m_qp_generator.getProblem().convert_to_soft();
                 Vector soft_initial_guess(soft_problem.num_vars());
                 soft_initial_guess.setZero();

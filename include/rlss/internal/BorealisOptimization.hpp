@@ -276,7 +276,7 @@ void generate_optimization_problem_borealis(
                 = rlss::internal::cornerPoints<T, DIM>(to_box);
 
         std::vector<Hyperplane> piece_obstacle_hyperplanes;
-
+        
         for(
             auto it = occupancy_grid.begin(to_box, obstacle_check_distance);
             it != occupancy_grid.end(to_box, obstacle_check_distance);

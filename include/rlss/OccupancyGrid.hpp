@@ -390,7 +390,7 @@ public:
     using UnorderedIndexSet = typename _OccupancyGrid::UnorderedIndexSet;
     using AlignedBox = typename _OccupancyGrid::AlignedBox;
 
-    OccupancyGridDistanceIterator(
+    OccupancyGridDistanceIterator( // this is where obstacle_check_distance is inserted...
             const _OccupancyGrid& g,
             std::size_t temp_obs_idx,
             typename UnorderedIndexSet::const_iterator occ_idx_itr,

@@ -36,19 +36,19 @@
     "max_rescaling_count": 5,
     "continuity_upto_degree": 7, 
     "collision_shape_at_zero": [  
-        [-0.3, -0.3, 0.0], 
-        [0.3, 0.3, 0.4]
+        [-0.5, -0.5, 0.0], 
+        [0.5, 0.5, 0.4]
     ],
     "optimization_obstacle_check_distance": 0.5,
     "optimizer": "rlss-hard-soft",
     "soft_optimization_parameters": {
         "robot_to_robot_hyperplane_constraints": {
-            "enable": true, 
+            "enable": false, 
             "weight": 10000
         },
         "robot_to_obstacle_hyperplane_constraints": {
             "enable": true,
-            "weight": 1000000
+            "weight": 10000000
         },
         "initial_point_constraints": {
             "enable": false,
@@ -56,7 +56,7 @@
         },
         "continuity_constraints": {
             "enable": true,
-            "weight": 1000
+            "weight": 1
         }
     },
     "noise": [
