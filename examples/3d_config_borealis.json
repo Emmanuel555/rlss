@@ -36,8 +36,8 @@
     "max_rescaling_count": 5,
     "continuity_upto_degree": 7, 
     "collision_shape_at_zero": [  
-        [-0.5, -0.5, 0.0], 
-        [0.5, 0.5, 0.4]
+        [-0.55, -0.55, 0.0], 
+        [0.55, 0.55, 0.4]
     ],
     "optimization_obstacle_check_distance": 0.5,
     "optimizer": "rlss-hard-soft",
