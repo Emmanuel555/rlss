@@ -34,7 +34,7 @@
   "search_step": 0.1,
   "rescaling_multiplier": 1.2,
   "max_rescaling_count": 2,
-  "desired_time_horizon": 2,
+  "desired_time_horizon": 8.0,
   "continuity_upto_degree": 2,
   "maximum_derivative_magnitudes": [
     [1, 3],
@@ -45,7 +45,7 @@
     [2, 0.8],
     [4, 0.1]
   ],
-  "piece_endpoint_cost_weights": [1, 4, 16, 64],
+  "piece_endpoint_cost_weights": [1, 1, 1, 1],
   "collision_shape_at_zero": [
     [-0.15, -0.15],
     [0.15, 0.15]

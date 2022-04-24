@@ -1,10 +1,10 @@
 {
     "base_path": "/home/emmanuel/rlss_ws/src/rlss_ros/third_party/rlss/",
-    "obstacle_directory": "examples/inputs/obstacle_descriptions/3d/tight_channel/",
-    "robot_parameters_directory": "examples/inputs/demo_descriptions/3d/tight_channel",
+    "obstacle_directory": "examples/inputs/obstacle_descriptions/3d/borealis_demo_1/",
+    "robot_parameters_directory": "examples/inputs/demo_descriptions/3d/borealis_demo",
     "replanning_period": 0.1,
     "reach_distance": 0.5, 
-    "occupancy_grid_step_size": [0.15, 0.15, 0.15],
+    "occupancy_grid_step_size": [0.5, 0.5, 0.5],
     "plan_for_trajectory": {
         "pieces": [
             {
